@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          sudo apt-get update && sudo apt-get install -y clang-format
+          find src include tests -iname '*.cpp*' | xargs clang-format --dry-run --Werror
+
+  static-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          sudo apt-get update && sudo apt-get install -y clang-tidy
+          find src include -iname '*.cpp*' | xargs clang-tidy -quiet
+
+  build-test:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: my_compiler/ci:latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          mkdir build && cd build
+          cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain.cmake ..
+          cmake --build . -- -j$(nproc)
+          ctest --output-on-failure
+
+  fuzz:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          # build AFL++ harness
+          mkdir build && cd build
+          cmake -DENABLE_FUZZ=ON .. 
+          make fuzz_lexer
+          ./fuzz_lexer -i ../fuzz/corpus -o ./findings -t 1000
