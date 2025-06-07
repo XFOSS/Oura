@@ -30,4 +30,37 @@ pub fn build(b: *std.Build) void {
         .flags = &[_][]const u8{"-std=c++23"},
     });
     b.installArtifact(ourolang);
+
+    const ourolang_cpp = b.addExecutable(.{
+        .name = "ourolang_cpp",
+        .target = target,
+        .optimize = optimize,
+    });
+    ourolang_cpp.linkLibC();
+    ourolang_cpp.linkLibCpp();
+    ourolang_cpp.addCSourceFiles(.{
+        .files = &[_][]const u8{"OuroLang_cpp/main.cpp"},
+        .flags = &[_][]const u8{"-std=c++23"},
+    });
+    b.installArtifact(ourolang_cpp);
+
+    const ouroboros = b.addExecutable(.{
+        .name = "ouroboros",
+        .target = target,
+        .optimize = optimize,
+    });
+    ouroboros.linkLibC();
+    ouroboros.addCSourceFiles(.{
+        .files = &[_][]const u8{
+            "Ouroboros/Ouroboros_Compiler/src/ouroboros/main.c",
+            "Ouroboros/Ouroboros_Compiler/src/ouroboros/lexer.c",
+            "Ouroboros/Ouroboros_Compiler/src/ouroboros/parser.c",
+            "Ouroboros/Ouroboros_Compiler/src/ouroboros/ast.c",
+            "Ouroboros/Ouroboros_Compiler/src/ouroboros/token.c",
+            "Ouroboros/Ouroboros_Compiler/src/ouroboros/codegen.c",
+        },
+        .flags = &[_][]const u8{"-std=c11"},
+    });
+    ouroboros.addIncludePath(.{ .path = "Ouroboros/Ouroboros_Compiler/include" });
+    b.installArtifact(ouroboros);
 }
