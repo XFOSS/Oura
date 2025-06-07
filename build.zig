@@ -25,7 +25,7 @@ pub fn build(b: *std.Build) void {
     ourolang.linkLibCpp();
     ourolang.addCSourceFiles(.{
         .files = &[_][]const u8{
-            "OuroLang_cpp/main.cpp",
+            "ouro_lang.cc",
         },
         .flags = &[_][]const u8{"-std=c++23"},
     });
