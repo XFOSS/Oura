@@ -109,4 +109,13 @@ pub fn build(b: *std.Build) void {
     }
     const test_cmd = b.addRunArtifact(mod_tests);
     b.step("mod-test", "Run module tests").dependOn(&test_cmd.step);
+
+    const zig_nvim = b.addExecutable(.{
+        .name = "zig_nvim",
+        .target = target,
+        .optimize = optimize,
+        .root_source_file = .{ .path = "zig_nvim/src/main.zig" },
+    });
+    zig_nvim.linkLibC();
+    b.installArtifact(zig_nvim);
 }
