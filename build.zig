@@ -63,4 +63,50 @@ pub fn build(b: *std.Build) void {
     });
     ouroboros.addIncludePath(.{ .path = "Ouroboros/Ouroboros_Compiler/include" });
     b.installArtifact(ouroboros);
+
+    const ouro_mod = b.addExecutable(.{
+        .name = "ouro_mod",
+        .target = target,
+        .optimize = optimize,
+    });
+    ouro_mod.linkLibCpp();
+    ouro_mod.addCSourceFiles(.{
+        .files = &[_][]const u8{
+            "ouro_mod/src/main.cc",
+            "ouro_mod/src/foundation/lexer.cc",
+            "ouro_mod/src/essentials/environment.cc",
+        },
+        .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" },
+    });
+    const mod_modules = &[_][]const u8{
+        "ouro_mod/src/foundation/lexer.cppm",
+        "ouro_mod/src/essentials/environment.cppm",
+    };
+    for (mod_modules) |m| {
+        ouro_mod.addModuleFile(m);
+    }
+    b.installArtifact(ouro_mod);
+
+    const ouro_mod_run = b.addRunArtifact(ouro_mod);
+    b.step("mod-run", "Run modular example").dependOn(&ouro_mod_run.step);
+
+    const mod_tests = b.addExecutable(.{
+        .name = "ouro_mod_tests",
+        .target = target,
+        .optimize = optimize,
+    });
+    mod_tests.linkLibCpp();
+    mod_tests.addCSourceFiles(.{
+        .files = &[_][]const u8{
+            "ouro_mod/tests/foundation_tests.cc",
+            "ouro_mod/src/foundation/lexer.cc",
+            "ouro_mod/src/essentials/environment.cc",
+        },
+        .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" },
+    });
+    for (mod_modules) |m| {
+        mod_tests.addModuleFile(m);
+    }
+    const test_cmd = b.addRunArtifact(mod_tests);
+    b.step("mod-test", "Run module tests").dependOn(&test_cmd.step);
 }
