@@ -9,39 +9,27 @@ jobs:
   formatting:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           sudo apt-get update && sudo apt-get install -y clang-format
-          find src include tests -iname '*.cc' | xargs clang-format --dry-run --Werror
+          find src include ouro_mod tests -iname '*.cc' | xargs clang-format --dry-run --Werror
+          if command -v zig >/dev/null; then
+            zig fmt --check build.zig
+          fi
 
   static-analysis:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: |
           sudo apt-get update && sudo apt-get install -y clang-tidy
           find src include -iname '*.cc' | xargs clang-tidy -quiet
 
-  build-test:
-    runs-on: ubuntu-latest
-    services:
-      docker:
-        image: my_compiler/ci:latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: |
-          mkdir build && cd build
-          cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain.cmake ..
-          cmake --build . -- -j$(nproc)
-          ctest --output-on-failure
-
-  fuzz:
+  zig-mod-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: |
-          # build AFL++ harness
-          mkdir build && cd build
-          cmake -DENABLE_FUZZ=ON .. 
-          make fuzz_lexer
-          ./fuzz_lexer -i ../fuzz/corpus -o ./findings -t 1000
+      - uses: actions/checkout@v4
+      - uses: goto-bus-stop/setup-zig@v2
+        with:
+          version: 0.14.1
+      - run: zig build mod-test

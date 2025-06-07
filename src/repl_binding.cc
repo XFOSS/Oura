@@ -1,5 +1,3 @@
 #include "ourolang/repl.h"
 
-void ouro_repl() {
-    ouro::repl();
-}
+void ouro_repl() { ouro::repl(); }
