@@ -4,12 +4,10 @@
   "workspaceFolder": "/workspace",
   "extensions": [
     "ms-vscode.cpptools",
-    "ms-vscode.cmake-tools",
     "llvm-vs-code-extensions.vscode-clangd"
   ],
   "settings": {
-    "C_Cpp.intelliSenseEngine": "Default",
-    "cmake.sourceDirectory": "${workspaceFolder}"
+    "C_Cpp.intelliSenseEngine": "Default"
   },
   "forwardPorts": [3000]
 }
