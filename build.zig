@@ -39,7 +39,7 @@ pub fn build(b: *std.Build) void {
     ourolang_cpp.linkLibC();
     ourolang_cpp.linkLibCpp();
     ourolang_cpp.addCSourceFiles(.{
-        .files = &[_][]const u8{"OuroLang_cpp/main.cpp"},
+        .files = &[_][]const u8{"OuroLang_cpp/main.cc"},
         .flags = &[_][]const u8{"-std=c++23"},
     });
     b.installArtifact(ourolang_cpp);

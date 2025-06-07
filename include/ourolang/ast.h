@@ -1,5 +1,5 @@
 #pragma once
-#include "token.hpp"
+#include "token.h"
 #include <memory>
 #include <variant>
 #include <vector>
