@@ -1,0 +1,15 @@
+{
+  "name": "OuroLang Dev",
+  "build": { "dockerfile": "Dockerfile" },
+  "workspaceFolder": "/workspace",
+  "extensions": [
+    "ms-vscode.cpptools",
+    "ms-vscode.cmake-tools",
+    "llvm-vs-code-extensions.vscode-clangd"
+  ],
+  "settings": {
+    "C_Cpp.intelliSenseEngine": "Default",
+    "cmake.sourceDirectory": "${workspaceFolder}"
+  },
+  "forwardPorts": [3000]
+}

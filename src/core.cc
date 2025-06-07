@@ -1,0 +1,3 @@
+export module core;
+
+export int add(int a, int b);
