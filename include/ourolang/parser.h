@@ -1,6 +1,6 @@
 #pragma once
-#include "lexer.hpp"
-#include "ast.hpp"
+#include "lexer.h"
+#include "ast.h"
 #include <vector>
 
 namespace ouro {

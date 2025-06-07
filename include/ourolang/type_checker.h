@@ -1,5 +1,5 @@
 #pragma once
-#include "ast.hpp"
+#include "ast.h"
 #include <map>
 #include <string>
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "interpreter.hpp"
+#include "interpreter.h"
 #include <iostream>
 #include <string>
 
@@ -20,5 +20,13 @@ inline void repl() {
         }
     }
 }
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+void ouro_repl();
+#ifdef __cplusplus
+}
+#endif
 
 } // namespace ouro
