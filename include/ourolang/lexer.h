@@ -1,6 +1,8 @@
 #pragma once
-#include "token.hpp"
+#include "token.h"
+#include "arena.h"
 #include <string>
+#include <memory_resource>
 #include <vector>
 #include <cctype>
 #include <stdexcept>
@@ -11,12 +13,14 @@ class Lexer {
     std::string source;
     size_t pos = 0;
     int line = 1;
+    std::pmr::memory_resource* mem;
 
 public:
-    explicit Lexer(const std::string& src) : source(src) {}
+    explicit Lexer(const std::string& src, std::pmr::memory_resource* r = std::pmr::get_default_resource())
+        : source(src), mem(r) {}
 
     std::vector<Token> tokenize() {
-        std::vector<Token> tokens;
+        std::pmr::vector<Token> tokens(mem);
         while (pos < source.size()) {
             char c = source[pos];
             if (std::isspace(static_cast<unsigned char>(c))) {
@@ -35,7 +39,7 @@ public:
             }
         }
         tokens.push_back({TokenType::EOF_TOKEN, "", line});
-        return tokens;
+        return std::vector<Token>(tokens.begin(), tokens.end());
     }
 
 private:

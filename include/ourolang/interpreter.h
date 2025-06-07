@@ -1,6 +1,7 @@
 #pragma once
-#include "parser.hpp"
-#include "type_checker.hpp"
+#include "parser.h"
+#include "type_checker.h"
+#include "arena.h"
 #include <functional>
 #include <variant>
 #include <map>
@@ -37,7 +38,8 @@ public:
     }
 
     void run(const std::string& source) {
-        Lexer lex(source);
+        Arena arena;
+        Lexer lex(source, arena.get_resource());
         auto tokens = lex.tokenize();
         Parser parser(tokens);
         auto ast = parser.parse();
