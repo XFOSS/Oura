@@ -17,3 +17,7 @@ Then run the REPL:
 ```
 
 A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed.
+
+## Repository Structure
+
+The project now includes a CMake-based build system, tests, container setup, and documentation. Run `cmake` in a `build` directory to configure and build the modules in `src/`.
