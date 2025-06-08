@@ -118,4 +118,12 @@ pub fn build(b: *std.Build) void {
     });
     zig_nvim.linkLibC();
     b.installArtifact(zig_nvim);
+    const zig_engine = b.addExecutable(.{
+        .name = "zig_engine",
+        .target = target,
+        .optimize = optimize,
+        .root_source_file = .{ .path = "src/engine/app.zig" },
+    });
+    zig_engine.linkLibC();
+    b.installArtifact(zig_engine);
 }
