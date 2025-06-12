@@ -12,8 +12,9 @@ pub fn build(b: *std.Build) void {
     dummy.linkLibC();
     dummy.addCSourceFiles(.{
         .files = &[_][]const u8{"dummy.c"},
-        .flags = &[_][]const u8{"-std=c99"},
+        .flags = &[_][]const u8{"-std=c23"},
     });
+    dummy.linkSystemLibrary("llvm");
     b.installArtifact(dummy);
 
     const ourolang = b.addExecutable(.{
@@ -29,6 +30,7 @@ pub fn build(b: *std.Build) void {
         },
         .flags = &[_][]const u8{"-std=c++23"},
     });
+    ourolang.linkSystemLibrary("llvm");
     b.installArtifact(ourolang);
 
     const ourolang_cpp = b.addExecutable(.{
@@ -42,6 +44,7 @@ pub fn build(b: *std.Build) void {
         .files = &[_][]const u8{"OuroLang_cpp/main.cc"},
         .flags = &[_][]const u8{"-std=c++23"},
     });
+    ourolang_cpp.linkSystemLibrary("llvm");
     b.installArtifact(ourolang_cpp);
 
     const ouroboros = b.addExecutable(.{
@@ -59,8 +62,9 @@ pub fn build(b: *std.Build) void {
             "Ouroboros/Ouroboros_Compiler/src/ouroboros/token.c",
             "Ouroboros/Ouroboros_Compiler/src/ouroboros/codegen.c",
         },
-        .flags = &[_][]const u8{"-std=c11"},
+        .flags = &[_][]const u8{"-std=c23"},
     });
+    ouroboros.linkSystemLibrary("llvm");
     ouroboros.addIncludePath(b.path("Ouroboros/Ouroboros_Compiler/include"));
     b.installArtifact(ouroboros);
 
@@ -69,6 +73,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+    ouro_mod.linkLibC();
     ouro_mod.linkLibCpp();
     ouro_mod.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -85,6 +90,7 @@ pub fn build(b: *std.Build) void {
         },
         .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" },
     });
+    ouro_mod.linkSystemLibrary("llvm");
     b.installArtifact(ouro_mod);
 
     const ouro_mod_run = b.addRunArtifact(ouro_mod);
@@ -95,6 +101,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+    mod_tests.linkLibC();
     mod_tests.linkLibCpp();
     mod_tests.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -111,6 +118,7 @@ pub fn build(b: *std.Build) void {
         },
         .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" },
     });
+    mod_tests.linkSystemLibrary("llvm");
     const test_cmd = b.addRunArtifact(mod_tests);
     b.step("mod-test", "Run module tests").dependOn(&test_cmd.step);
 
@@ -121,6 +129,7 @@ pub fn build(b: *std.Build) void {
         .root_source_file = b.path("zig_nvim/src/main.zig"),
     });
     zig_nvim.linkLibC();
+    zig_nvim.linkSystemLibrary("llvm");
     b.installArtifact(zig_nvim);
     const zig_engine = b.addExecutable(.{
         .name = "zig_engine",
@@ -129,6 +138,7 @@ pub fn build(b: *std.Build) void {
         .root_source_file = b.path("src/engine/app.zig"),
     });
     zig_engine.linkLibC();
+    zig_engine.linkSystemLibrary("llvm");
     b.installArtifact(zig_engine);
 
     // convenience step to build all artifacts
