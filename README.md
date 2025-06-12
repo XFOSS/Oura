@@ -16,11 +16,22 @@ Then run the REPL:
 ./ouro_lang
 ```
 
-A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed.
+A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed. It completely replaces the old CMake build and compiles every component:
+
+* `ourolang_repl` – the simple interpreter in `ouro_lang.cc`
+* `ouroboros` – a legacy C compiler preserved for reference
+* `ouro_mod` – the modern C++23 module demo
+
+Run `zig build` to build all targets. Additional convenience steps are:
+
+```bash
+zig build mod-run   # run the module demo
+zig build mod-test  # execute module unit tests
+```
 
 ## Repository Structure
 
-The project now includes a CMake-based build system, tests, container setup, and documentation. Run `cmake` in a `build` directory to configure and build the modules in `src/`.
+The project now relies solely on Zig for building, testing and container setup. Run `zig build` in the repository root to compile the executables.
 
 ## Zig Build with Modules
 
@@ -35,4 +46,15 @@ Run its tests using:
 ```bash
 zig build mod-test
 ```
+
+## Documentation and Language Specification
+
+Detailed design notes live in the `docs/` directory. The evolving language
+specification is provided in `OuroLang_Spec_2_0.md` and outlines syntax,
+semantics and concurrency features currently implemented. Community
+contributions are welcome—see `docs/contrib.md` for guidelines.
+
+## Fuzzing Tools
+
+Experimental AFL++ harnesses live in `tools/fuzz`.  See that directory for build instructions and an example corpus to discover crashes in the lexer and parser.
 

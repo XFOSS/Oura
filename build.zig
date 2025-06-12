@@ -61,7 +61,7 @@ pub fn build(b: *std.Build) void {
         },
         .flags = &[_][]const u8{"-std=c11"},
     });
-    ouroboros.addIncludePath(.{ .path = "Ouroboros/Ouroboros_Compiler/include" });
+    ouroboros.addIncludePath(.{ .cwd_relative = "Ouroboros/Ouroboros_Compiler/include" });
     b.installArtifact(ouroboros);
 
     const ouro_mod = b.addExecutable(.{
@@ -82,9 +82,7 @@ pub fn build(b: *std.Build) void {
         "ouro_mod/src/foundation/lexer.cppm",
         "ouro_mod/src/essentials/environment.cppm",
     };
-    for (mod_modules) |m| {
-        ouro_mod.addModuleFile(m);
-    }
+    ouro_mod.addCSourceFiles(.{ .files = mod_modules, .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" } });
     b.installArtifact(ouro_mod);
 
     const ouro_mod_run = b.addRunArtifact(ouro_mod);
@@ -104,9 +102,7 @@ pub fn build(b: *std.Build) void {
         },
         .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" },
     });
-    for (mod_modules) |m| {
-        mod_tests.addModuleFile(m);
-    }
+    mod_tests.addCSourceFiles(.{ .files = mod_modules, .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" } });
     const test_cmd = b.addRunArtifact(mod_tests);
     b.step("mod-test", "Run module tests").dependOn(&test_cmd.step);
 }

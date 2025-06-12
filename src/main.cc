@@ -1,6 +1,6 @@
 #include "ourolang/repl.h"
 
 int main() {
-    ouro::repl();
-    return 0;
+  ouro::repl();
+  return 0;
 }
