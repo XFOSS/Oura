@@ -73,6 +73,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+    ouro_mod.linkLibC();
     ouro_mod.linkLibCpp();
     ouro_mod.addCSourceFiles(.{
         .files = &[_][]const u8{
@@ -100,6 +101,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+    mod_tests.linkLibC();
     mod_tests.linkLibCpp();
     mod_tests.addCSourceFiles(.{
         .files = &[_][]const u8{
