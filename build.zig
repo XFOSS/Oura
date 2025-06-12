@@ -61,7 +61,7 @@ pub fn build(b: *std.Build) void {
         },
         .flags = &[_][]const u8{"-std=c11"},
     });
-    ouroboros.addIncludePath(.{ .path = "Ouroboros/Ouroboros_Compiler/include" });
+    ouroboros.addIncludePath(b.path("Ouroboros/Ouroboros_Compiler/include"));
     b.installArtifact(ouroboros);
 
     const ouro_mod = b.addExecutable(.{
@@ -78,13 +78,13 @@ pub fn build(b: *std.Build) void {
         },
         .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" },
     });
-    const mod_modules = &[_][]const u8{
-        "ouro_mod/src/foundation/lexer.cppm",
-        "ouro_mod/src/essentials/environment.cppm",
-    };
-    for (mod_modules) |m| {
-        ouro_mod.addModuleFile(m);
-    }
+    ouro_mod.addCSourceFiles(.{
+        .files = &[_][]const u8{
+            "ouro_mod/src/foundation/lexer.cppm",
+            "ouro_mod/src/essentials/environment.cppm",
+        },
+        .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" },
+    });
     b.installArtifact(ouro_mod);
 
     const ouro_mod_run = b.addRunArtifact(ouro_mod);
@@ -104,9 +104,13 @@ pub fn build(b: *std.Build) void {
         },
         .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" },
     });
-    for (mod_modules) |m| {
-        mod_tests.addModuleFile(m);
-    }
+    mod_tests.addCSourceFiles(.{
+        .files = &[_][]const u8{
+            "ouro_mod/src/foundation/lexer.cppm",
+            "ouro_mod/src/essentials/environment.cppm",
+        },
+        .flags = &[_][]const u8{ "-std=c++23", "-fmodules-ts" },
+    });
     const test_cmd = b.addRunArtifact(mod_tests);
     b.step("mod-test", "Run module tests").dependOn(&test_cmd.step);
 
@@ -114,7 +118,7 @@ pub fn build(b: *std.Build) void {
         .name = "zig_nvim",
         .target = target,
         .optimize = optimize,
-        .root_source_file = .{ .path = "zig_nvim/src/main.zig" },
+        .root_source_file = b.path("zig_nvim/src/main.zig"),
     });
     zig_nvim.linkLibC();
     b.installArtifact(zig_nvim);
@@ -122,8 +126,12 @@ pub fn build(b: *std.Build) void {
         .name = "zig_engine",
         .target = target,
         .optimize = optimize,
-        .root_source_file = .{ .path = "src/engine/app.zig" },
+        .root_source_file = b.path("src/engine/app.zig"),
     });
     zig_engine.linkLibC();
     b.installArtifact(zig_engine);
+
+    // convenience step to build all artifacts
+    const all_step = b.step("all", "Build all artifacts");
+    all_step.dependOn(b.getInstallStep());
 }
