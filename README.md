@@ -16,7 +16,7 @@ Then run the REPL:
 ./ouro_lang
 ```
 
-A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed.  It now compiles the C portions of the project using the C23 standard and links against LLVM in addition to `libc`. The script mirrors the basic CMake configuration and exposes tasks for running the module example and its unit tests.
+A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed. It now compiles the C portions of the project using the C23 standard and links against LLVM in addition to `libc`. The script mirrors the basic CMake configuration and exposes tasks for running the module example and its unit tests. If Zig is not available, run `scripts/install_zig.sh` to download version `0.14.1` locally.
 
 ## Repository Structure
 
