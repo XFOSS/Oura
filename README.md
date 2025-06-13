@@ -49,3 +49,12 @@ Experimental AFL++ harnesses live in `tools/fuzz`.  They can be
 built with CMake using `-DENABLE_FUZZ=ON` and run against the sample
 corpus in `fuzz/corpus` to discover crashes in the lexer and parser.
 
+
+## Legacy Ouroboros Sources
+
+The `ouroboros-lang` directory tracks the original C implementation of the
+language from the `FyreFly-TM/ouroboros-lang` project. Use the provided
+Makefile to build the interpreter and run example scripts such as
+`test_all_tokens.ouro`. Binary build artifacts and bundled `node_modules`
+have been removed from version control.
+

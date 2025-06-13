@@ -1,0 +1,315 @@
+// test_all_tokens.ouro
+/*
+   Comprehensive test script for Ouroboros
+   Uses all tokens and language features for debugging
+*/
+
+// Imports
+import "module1.ouro";
+import "module2.ouro" as mod2;
+
+// Single-line comment
+/* Multi-line comment
+   spanning multiple lines
+*/
+
+// Variable declarations
+let a = 10;
+let b = 0.5;
+let c = .75;
+let d = 1.23e4;
+var e = "Hello, World!\nNew Line\tTab\"Quote\"";
+const f = 'x';
+let boolTrue = true;
+let boolFalse = false;
+let n = null;
+
+// Typed declarations
+let x: int = 3;
+var y: float = 3.14;
+const z: bool = false;
+let str: string = "Test";
+let ch: char = '\n';
+let arrNums: int[] = [1, 2, 3, 4];
+let multiArr: int[][] = [[1], [2, 3]];
+var[] varArr = [5, 6, 7]; // var[] syntax
+
+// Empty literals
+let emptyArr = [];
+let emptyMap = {};
+
+// Generic and map literal
+let genericMap: map<string, array<int>> = {
+    "one": [1],
+    "two": [2, 2],
+    "nested": { "inner": true }
+};
+
+// Operators
+let sum = a + x - (b * y) / c % 2;
+sum += 5;
+sum -= 2;
+sum *= 3;
+sum /= 4;
+sum %= 3;
+
+let comp = (a == x) != (b < c) && (boolTrue || !boolFalse);
+let tern = boolTrue ? "yes" : "no";
+
+// Bitwise and shifts
+let leftShift = a << 1;
+let rightShift = a >> 1;
+let unsignedShift = a >>> 2;
+
+// Unary operators
+let preInc = ++x;
+let preDec = --x;
+let postInc = x++;
+let postDec = x--;
+
+// Parentheses grouping
+let paren = (a + b) * (c - d);
+
+// Numeric edge cases
+let sci = 3.14e-2;
+let dotStart = .5;
+
+// Anonymous functions
+var anon1 = func(x, y) {
+    return x * y;
+};
+
+var anon2 = function(x) { return x + 1; };
+var anon3 = fn() {
+    print("fn alias");
+};
+
+// Function definitions
+function greet(name) {
+    print("Hello " + name);
+}
+
+fn sayHi(name) {
+    print("Hi " + name);
+}
+
+func shout(msg) {
+    print(msg + "!");
+}
+
+// Typed functions
+int add(a: int, b: int): int {
+    return a + b;
+}
+
+float mult(int a, float b) {
+    return a * b;
+}
+
+// Function with no parameters and no return value
+void doNothing() {
+    // empty body
+}
+
+// Control flow
+if (a > 5) {
+    print("a > 5");
+} else if (a == 5) {
+    print("a == 5");
+} else {
+    print("a < 5");
+}
+
+for (i = 0; i < 3; i++) {
+    if (i == 1) continue;
+    if (i == 2) break;
+    print(i);
+}
+
+while (x < 5) x++;
+
+for (; x < 8;) {
+    x++;
+}
+
+for (;;) {
+    break;
+}
+
+// Block-less if and loops
+if (boolTrue) print("single stmt");
+while (false) print("won't print");
+
+// Struct
+struct Point {
+    x: float;
+    y: float;
+}
+
+// Classes
+class Base {
+    public var baseVal: int = 100;
+    function show() {
+        print("Base: " + baseVal);
+    }
+}
+
+class Derived extends Base {
+    constructor function new(val: int) {
+        this.baseVal = val;
+    }
+    public static function show() {
+        super.show();
+        print("Derived");
+    }
+}
+
+// Instantiation and method calls
+let baseObj = new Base();
+baseObj.show();
+
+let derivedObj = new Derived(200);
+derivedObj.show();
+
+// Member access and indexing
+let firstElem = arrNums[0];
+let memberAccess = baseObj.baseVal;
+
+// Complex nested literals
+let complex = { a: [ { b: true } ], c: { nested: null } };
+
+// Import alias usage
+mod2.someFunc();
+
+// Using keyword-like identifiers
+let inVal = 1;
+let isVal = 2;
+let asVal = 3;
+
+// Unknown token test (should trigger lexer warning)
+// let unknownChar = @;
+
+// End of test script
+
+// ===== Additional Tests =====
+
+// Deep generics without initializer
+let noInitGen: map<string, map<string, array<int>>>;
+
+// Comparison operators
+let ge = a >= x;
+let le = a <= x;
+
+// Bitwise OR (expected to trigger parse/runtime warning)
+let bitOr = 1 | 2;
+
+// Closure and higher-order functions
+var adderGen = func(x) {
+    return func(y) { return x + y; };
+};
+var add10 = adderGen(10);
+print(add10(5));
+
+// Array and map of functions
+let funcArr = [func(){ print("f0"); }, func(){ print("f1"); }];
+funcArr[0]();
+funcArr[1]();
+
+let funcMap2: map<string, array<function>> = {
+    "inc": anon1,
+    "addTen": add10
+};
+print(funcMap2["inc"](3, 4));
+
+// Access nested array element
+print(multiArr[1][0]);
+
+// Nested classes and usage
+class Outer {
+    class Inner {
+        function f() { print("Inner f"); }
+    }
+    function testInner() {
+        let i = new Inner();
+        i.f();
+    }
+}
+let outer = new Outer();
+outer.testInner();
+
+// Static class member tests
+class StaticTest {
+    static var count: int = 0;
+    static function inc() { count++; }
+}
+StaticTest.inc();
+print(StaticTest.count);
+
+// Colon-style typed var without initializer
+let uninit: double;
+
+// Built-in generic array and object types
+let objLit: object = {};
+let arrObj: array<object> = [ {}, { nested: true } ];
+
+// Typed function without explicit return type annotation (default any)
+int untypedFunc(a, b) {
+    return a * b;
+}
+print(untypedFunc(2, 3));
+
+// Dynamic import inside function
+func dynamicImport() {
+    import "dynamic_module.ouro";
+    print("Dynamic import executed");
+}
+dynamicImport();
+
+// API function calls
+func testGraphics() {
+    graphics_init("OpenGL");
+    graphics_create_window(640, 480, "GLTest");
+    graphics_clear(0.3, 0.3, 0.3, 1.0);
+    graphics_swap_buffers();
+    graphics_shutdown();
+}
+testGraphics();
+
+func testVulkanAPI() {
+    vulkan_init();
+    let inst = vulkan_create_instance("OuroApp");
+    let phys = vulkan_select_physical_device();
+    let dev = vulkan_create_device();
+    vulkan_cleanup();
+}
+testVulkanAPI();
+
+func testNetworkAPI() {
+    let server = create_server(9090);
+    let client = connect_to_server("127.0.0.1", 9090);
+    send_data(client, "Ping");
+    let resp = receive_data(client);
+    print(resp);
+    close_socket(client);
+    close_socket(server);
+}
+testNetworkAPI();
+
+func testHTTPAPI() {
+    let status = http_get("http://example.com");
+    print(status);
+}
+testHTTPAPI();
+
+func testConcurrency() {
+    start_thread(func(arg) {
+        print("Thread received: " + arg);
+    }, "hello");
+    start_thread(func() {
+        print("Null-arg thread");
+    }, null);
+    set_timeout(func() { print("Timeout fired!"); }, 1);
+}
+testConcurrency();
+
+// ===== End of Additional Tests ===== 

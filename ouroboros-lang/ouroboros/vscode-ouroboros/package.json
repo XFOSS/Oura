@@ -1,0 +1,64 @@
+{
+  "name": "ouroboros-language",
+  "displayName": "Ouroboros Language",
+  "description": "Syntax highlighting and tools for the Ouroboros programming language with support for typed functions, structs, classes, and generics",
+  "version": "0.5.0",
+  "publisher": "ouroboros-lang",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ouroboros-lang/vscode-ouroboros"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "ouroboros",
+        "aliases": ["Ouroboros", "ouroboros"],
+        "extensions": [".ouro"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ouroboros",
+        "scopeName": "source.ouroboros",
+        "path": "./syntaxes/ouroboros.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "ouroboros",
+        "path": "./snippets/ouroboros.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "ouroboros.createProject",
+        "title": "Create New Ouroboros Project"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:ouroboros",
+    "onCommand:ouroboros.createProject"
+  ],
+  "main": "./extension.js",
+  "dependencies": {
+    "vscode-languageclient": "^7.0.0"
+  },
+  "keywords": [
+    "ouroboros",
+    "language",
+    "syntax",
+    "struct",
+    "class",
+    "generics",
+    "typing"
+  ]
+} 

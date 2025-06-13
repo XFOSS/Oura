@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Ouroboros Program",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.ouro",
+            "preLaunchTask": "compile-ouroboros"
+        }
+    ]
+} 

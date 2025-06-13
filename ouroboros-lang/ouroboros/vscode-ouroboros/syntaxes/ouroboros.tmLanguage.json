@@ -1,0 +1,294 @@
+{
+  "name": "Ouroboros",
+  "scopeName": "source.ouroboros",
+  "fileTypes": [ "ouro", "ouroboros" ],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#function-definitions" },
+    { "include": "#class-struct-enum-definitions" },
+    { "include": "#all-keywords" },
+    { "include": "#type-usage" },
+    { "include": "#function-calls" },
+    { "include": "#member-access" },
+    { "include": "#numbers" },
+    { "include": "#operators" },
+    { "include": "#identifiers" },
+    { "include": "#punctuation" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.ouroboros",
+          "match": "//.*"
+        },
+        {
+          "name": "comment.block.ouroboros",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "patterns": [ { "include": "#comments" } ]
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.ouroboros",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.ouroboros",
+              "match": "\\\\(?:[\"\\\\/bfnrt]|u[0-9a-fA-F]{4})"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.ouroboros",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.ouroboros",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "all-keywords": {
+      "patterns": [
+        {
+          "comment": "Scoped as 'invalid' to force a red color in most themes.",
+          "name": "invalid.illegal.function-keyword.ouroboros",
+          "match": "\\b(function|fn)\\b"
+        },
+        {
+          "name": "keyword.control.flow.ouroboros",
+          "match": "\\b(if|else|while|for|return|break|continue|switch|case|default)\\b"
+        },
+        {
+          "name": "keyword.declaration.ouroboros",
+          "match": "\\b(let|var|const|interface|module|import|package)\\b"
+        },
+        {
+          "name": "storage.modifier.ouroboros",
+          "match": "\\b(public|private|protected|static|final|abstract|async|await|yield)\\b"
+        },
+        {
+          "name": "keyword.oop.ouroboros",
+          "match": "\\b(new|this|super|extends|implements|instanceof)\\b"
+        },
+        {
+          "name": "keyword.operator.word.ouroboros",
+          "match": "\\b(as|in|is|typeof)\\b"
+        },
+        {
+          "name": "constant.language.ouroboros",
+          "match": "\\b(true|false|null)\\b"
+        },
+        {
+          "name": "storage.type.primitive.ouroboros",
+          "match": "\\b(int|long|float|double|bool|boolean|string|char|void|any|array|object|map|Vector2|Vector3|Vector4)\\b"
+        }
+      ]
+    },
+    "type-usage": {
+      "patterns": [
+        {
+          "comment": "Matches a user-defined type in a declaration context, e.g. 'MyClass myVar' or 'List<MyClass> items'",
+          "name": "entity.name.type.user-defined.ouroboros",
+          "match": "\\b([A-Z_][A-Za-z0-9_]*)(?=\\s*<[^>]+>\\s+[a-zA-Z_]|\\[\\]\\s+[a-zA-Z_]|\\s+[a-zA-Z_])"
+        },
+        {
+          "name": "storage.type.array.operator.ouroboros",
+          "match": "\\[\\]"
+        }
+      ]
+    },
+    "class-struct-enum-definitions": {
+      "patterns": [
+        {
+          "name": "meta.definition.class.ouroboros",
+          "match": "\\b(class)\\s+([A-Z_][A-Za-z0-9_]*)(\\s*<[^>]+>)?(?:\\s*(extends)\\s*([A-Z_][A-Za-z0-9_]*)(?:\\s*<[^>]+>)?)?",
+          "captures": {
+            "1": { "name": "storage.type.class.ouroboros" },
+            "2": { "name": "entity.name.type.class.ouroboros" },
+            "3": { "patterns": [ { "include": "#type-usage" } ] },
+            "4": { "name": "storage.modifier.extends.ouroboros" },
+            "5": { "name": "entity.other.inherited-class.ouroboros" }
+          }
+        },
+        {
+          "name": "meta.definition.struct.ouroboros",
+          "match": "\\b(struct)\\s+([A-Z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "storage.type.struct.ouroboros" },
+            "2": { "name": "entity.name.type.struct.ouroboros" }
+          }
+        },
+        {
+          "name": "meta.definition.enum.ouroboros",
+          "match": "\\b(enum)\\s+([A-Z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": { "name": "storage.type.enum.ouroboros" },
+            "2": { "name": "entity.name.type.enum.ouroboros" }
+          }
+        }
+      ]
+    },
+    "function-definitions": {
+      "patterns": [
+        {
+          "comment": "Identifies a function name in a definition",
+          "match": "(?<=^\\s*(?:public\\s+|private\\s+|static\\s+)*\\b(?:function|fn)\\s+(?:\\w+\\s+)?)([a-zA-Z_][a-zA-Z0-9_]*)(?=\\s*\\()",
+          "name": "entity.name.function.definition.ouroboros"
+        }
+      ]
+    },
+    "function-calls": {
+      "patterns": [
+        {
+          "name": "meta.function-call.ouroboros",
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)(?:\\s*<[^>]+>)?\\s*(\\()",
+          "captures": {
+            "1": { "name": "entity.name.function.call.ouroboros" },
+            "2": { "name": "punctuation.definition.arguments.begin.ouroboros" }
+          }
+        },
+        {
+          "name": "support.function.builtin.ouroboros",
+          "match": "\\b(print|to_string|string_length|string_concat|sqrt|abs|max|min|assert|log|warn|error|opengl_[a-z_]+|vulkan_[a-z_]+|voxel_[a-z_]+|ml_[a-z_]+|init_gui|draw_window|draw_label|draw_button|gui_message_loop|connect_to_server|http_get|register_event|trigger_event|set_timeout)\\b(?=\\s*\\()"
+        }
+      ]
+    },
+    "member-access": {
+      "patterns": [
+        {
+          "match": "(\\.)\\s*([a-zA-Z_][a-zA-Z0-9_]*)(?!\\s*\\()",
+          "captures": {
+            "1": { "name": "punctuation.accessor.dot.ouroboros" },
+            "2": { "name": "variable.other.property.ouroboros" }
+          }
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.ouroboros",
+          "match": "\\b0x[0-9a-fA-F]+(?:_[0-9a-fA-F]+)*[LN]?\\b"
+        },
+        {
+          "name": "constant.numeric.float.ouroboros",
+          "match": "\\b(?:\\d+(?:_\\d+)*\\.\\d*(?:_d*)*(?:[eE][+-]?\\d+)?|\\d+(?:_\\d+)*[eE][+-]?\\d+|\\.\\d+(?:_\\d+)*(?:[eE][+-]?\\d+)?)[FDL]?\\b"
+        },
+        {
+          "name": "constant.numeric.integer.ouroboros",
+          "match": "\\b\\d+(?:_\\d+)*[LN]?\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.arrow.ouroboros",
+          "match": "=>|->"
+        },
+        {
+          "name": "keyword.operator.assignment.compound.ouroboros",
+          "match": "\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|<<=|>>="
+        },
+        {
+          "name": "keyword.operator.assignment.ouroboros",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.comparison.ouroboros",
+          "match": "==|!=|===|!==|<=|>=|<|>"
+        },
+        {
+          "name": "keyword.operator.logical.ouroboros",
+          "match": "&&|\\|\\||!"
+        },
+        {
+          "name": "keyword.operator.bitwise.ouroboros",
+          "match": "&(?!&)|\\|(?!\\|)|\\^|~|<<|>>"
+        },
+        {
+          "name": "keyword.operator.arithmetic.ouroboros",
+          "match": "\\+\\+|--|\\+|-|\\*|/|%"
+        },
+        {
+          "name": "keyword.operator.ternary.ouroboros",
+          "match": "\\?"
+        },
+        {
+          "name": "keyword.operator.spread.ouroboros",
+          "match": "\\.\\.\\."
+        },
+        {
+          "name": "keyword.operator.scope-resolution.ouroboros",
+          "match": "::"
+        }
+      ]
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "name": "variable.language.this.ouroboros",
+          "match": "\\bthis\\b"
+        },
+        {
+          "name": "variable.other.identifier.ouroboros",
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.terminator.statement.ouroboros",
+          "match": ";"
+        },
+        {
+          "name": "punctuation.separator.comma.ouroboros",
+          "match": ","
+        },
+        {
+          "name": "punctuation.separator.colon.ouroboros",
+          "match": ":"
+        },
+        {
+          "name": "punctuation.section.curly.begin.ouroboros",
+          "match": "\\{"
+        },
+        {
+          "name": "punctuation.section.curly.end.ouroboros",
+          "match": "\\}"
+        },
+        {
+          "name": "punctuation.section.round.begin.ouroboros",
+          "match": "\\("
+        },
+        {
+          "name": "punctuation.section.round.end.ouroboros",
+          "match": "\\)"
+        },
+        {
+          "name": "punctuation.section.square.begin.ouroboros",
+          "match": "\\["
+        },
+        {
+          "name": "punctuation.section.square.end.ouroboros",
+          "match": "\\]"
+        },
+        {
+          "name": "punctuation.accessor.dot.ouroboros",
+          "match": "\\."
+        }
+      ]
+    }
+  }
+}

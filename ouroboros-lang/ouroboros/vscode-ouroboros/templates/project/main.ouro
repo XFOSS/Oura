@@ -1,0 +1,10 @@
+// Ouroboros Project Template
+// Created with the Ouroboros VS Code Extension
+
+function main() {
+    print("Hello, Ouroboros!");
+    
+    // Your code here
+    
+    return 0;
+} 

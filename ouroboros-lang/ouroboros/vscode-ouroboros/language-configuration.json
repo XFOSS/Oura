@@ -1,0 +1,455 @@
+{
+  "Comment Block": {
+    "prefix": "commentblock",
+    "body": [
+      "/*",
+      " * ${1:Description}",
+      " */"
+    ],
+    "description": "Create a multi-line comment block"
+  },
+  "Single Line Comment": {
+    "prefix": "//",
+    "body": [
+      "// ${1:comment}"
+    ],
+    "description": "Create a single-line comment"
+  },
+  "Print Statement": {
+    "prefix": "print",
+    "body": [
+      "print(${1:\"message\"});"
+    ],
+    "description": "Print a message to the console"
+  },
+  "Get Input": {
+    "prefix": "getinput",
+    "body": [
+      "string ${1:variableName} = get_input(\"${2:Enter value: }\");"
+    ],
+    "description": "Get input from the user"
+  },
+  "Variable Declaration (let - inferred)": {
+    "prefix": "let",
+    "body": [
+      "let ${1:variableName} = ${2:initialValue};"
+    ],
+    "description": "Declare a variable with type inference (mutable)"
+  },
+  "Variable Declaration (var - inferred)": {
+    "prefix": "var",
+    "body": [
+      "var ${1:variableName} = ${2:initialValue};"
+    ],
+    "description": "Declare a variable with type inference (mutable, alternative)"
+  },
+  "Constant Declaration (const - inferred)": {
+    "prefix": "const",
+    "body": [
+      "const ${1:CONSTANT_NAME} = ${2:value};"
+    ],
+    "description": "Declare a constant with type inference"
+  },
+  "Typed Variable Declaration": {
+    "prefix": "vartype",
+    "body": [
+      "${1:int} ${2:name} = ${3:value};"
+    ],
+    "description": "Create a typed variable declaration"
+  },
+  "Typed Constant Declaration": {
+    "prefix": "consttype",
+    "body": [
+      "const ${1:int} ${2:NAME} = ${3:value};"
+    ],
+    "description": "Create a typed constant declaration"
+  },
+  "Function Declaration (Untyped)": {
+    "prefix": "function",
+    "body": [
+      "function ${1:functionName}(${2:parameters}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a new untyped function"
+  },
+  "Function Declaration (fn shortcut)": {
+    "prefix": "fn",
+    "body": [
+      "fn ${1:functionName}(${2:parameters}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a new untyped function (short syntax)"
+  },
+  "Typed Function": {
+    "prefix": "typedfunction",
+    "body": [
+      "${1:int} ${2:functionName}(${3:int param1, string param2}) {",
+      "\t$0",
+      "\treturn ${4:value};",
+      "}"
+    ],
+    "description": "Create a typed function with return type"
+  },
+  "Void Function (Typed)": {
+    "prefix": "voidfunction",
+    "body": [
+      "void ${1:functionName}(${2:string message}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a typed function that returns void"
+  },
+  "Main Function": {
+    "prefix": "main",
+    "body": [
+      "function main() {",
+      "\tprint(\"Program started!\");",
+      "\t$0",
+      "\treturn 0;",
+      "}"
+    ],
+    "description": "Create a main function entry point"
+  },
+  "If Statement": {
+    "prefix": "if",
+    "body": [
+      "if (${1:condition}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create an if statement"
+  },
+  "If-Else Statement": {
+    "prefix": "ifelse",
+    "body": [
+      "if (${1:condition}) {",
+      "\t${2:// code if true}",
+      "} else {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create an if-else statement"
+  },
+  "If-Else If-Else Statement": {
+    "prefix": "ifelseif",
+    "body": [
+      "if (${1:condition1}) {",
+      "\t${2:// code if condition1 true}",
+      "} else if (${3:condition2}) {",
+      "\t${4:// code if condition2 true}",
+      "} else {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create an if-else if-else statement chain"
+  },
+  "While Loop": {
+    "prefix": "while",
+    "body": [
+      "while (${1:condition}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a while loop"
+  },
+  "For Loop (C-style)": {
+    "prefix": "for",
+    "body": [
+      "for (let ${1:i} = 0; ${1:i} < ${2:10}; ${1:i} = ${1:i} + 1) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a C-style for loop"
+  },
+  "For Loop (Typed Index)": {
+    "prefix": "fortyped",
+    "body": [
+      "for (int ${1:i} = 0; ${1:i} < ${2:10}; ${1:i} = ${1:i} + 1) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a C-style for loop with a typed index variable"
+  },
+  "Import Statement": {
+    "prefix": "import",
+    "body": [
+      "import \"${1:module_name}\";"
+    ],
+    "description": "Import a module"
+  },
+  "Struct Declaration": {
+    "prefix": "struct",
+    "body": [
+      "struct ${1:StructName} {",
+      "\t${2:int} ${3:field1};",
+      "\t${4:string} ${5:field2};",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a struct declaration"
+  },
+  "Class Declaration": {
+    "prefix": "class",
+    "body": [
+      "class ${1:ClassName} ${2:extends ParentClass} {",
+      "\t// Fields",
+      "\tpublic ${3:string} ${4:myField};",
+      "\tprivate ${5:int} ${6:_internalValue};",
+      "\tpublic static ${7:int} ${8:sharedCounter} = 0;",
+      "",
+      "\t// Constructor",
+      "\tfunction init(${9:string initialValue}) {",
+      "\t\tthis.${4:myField} = initialValue;",
+      "\t\tthis.${6:_internalValue} = 0;",
+      "\t\t${1:ClassName}.${8:sharedCounter} = ${1:ClassName}.${8:sharedCounter} + 1;",
+      "\t\t$0",
+      "\t}",
+      "",
+      "\t// Instance Method",
+      "\tpublic ${10:void} ${11:myMethod}(${12:int param}) {",
+      "\t\tprint(\"Method called with: \" + to_string(param));",
+      "\t}",
+      "",
+      "\t// Static Method",
+      "\tpublic static ${13:string} ${14:getFactoryName}() {",
+      "\t\treturn \"${1:ClassName} Factory\";",
+      "\t}",
+      "}"
+    ],
+    "description": "Create a class declaration with fields, constructor, and methods"
+  },
+  "Class Method (Instance)": {
+    "prefix": "method",
+    "body": [
+      "public ${1:void} ${2:methodName}(${3:int param}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Add an instance method to a class"
+  },
+  "Class Method (Static)": {
+    "prefix": "staticmethod",
+    "body": [
+      "public static ${1:string} ${2:staticMethodName}(${3:string arg}) {",
+      "\t$0",
+      "\treturn \"Processed: \" + arg;",
+      "}"
+    ],
+    "description": "Add a static method to a class"
+  },
+  "Class Field (Public)": {
+    "prefix": "publicfield",
+    "body": [
+      "public ${1:int} ${2:fieldName};"
+    ],
+    "description": "Add a public field to a class"
+  },
+  "Class Field (Private)": {
+    "prefix": "privatefield",
+    "body": [
+      "private ${1:float} ${2:_fieldName};"
+    ],
+    "description": "Add a private field to a class"
+  },
+  "Class Field (Static)": {
+    "prefix": "staticfield",
+    "body": [
+      "public static ${1:string} ${2:SHARED_FIELD} = \"initial_static_value\";"
+    ],
+    "description": "Add a static field to a class"
+  },
+  "New Object Instantiation": {
+    "prefix": "newobj",
+    "body": [
+      "let ${2:objectName} = new ${1:ClassName}(${3:constructorArgs});"
+    ],
+    "description": "Create a new object instance"
+  },
+  "Array Literal (int)": {
+    "prefix": "arrayint",
+    "body": [
+      "int[] ${1:numbers} = [${2:1, 2, 3, 4, 5}];"
+    ],
+    "description": "Create an array of integers"
+  },
+  "Array Literal (string)": {
+    "prefix": "arraystring",
+    "body": [
+      "string[] ${1:names} = [\"${2:Alice}\", \"${3:Bob}\", \"${4:Charlie}\"];"
+    ],
+    "description": "Create an array of strings"
+  },
+  "Array Access": {
+    "prefix": "arrayaccess",
+    "body": [
+      "${1:arrayName}[${2:index}]"
+    ],
+    "description": "Access an element in an array"
+  },
+  "String Concatenation": {
+    "prefix": "strcat",
+    "body": [
+      "string ${1:result} = ${2:\"Hello\"} + ${3:\" World\"};"
+    ],
+    "description": "Concatenate strings"
+  },
+  "To String Conversion": {
+    "prefix": "tostring",
+    "body": [
+      "to_string(${1:value})"
+    ],
+    "description": "Convert a value to its string representation"
+  },
+  "String Length": {
+    "prefix": "strlen",
+    "body": [
+      "int ${1:length} = string_length(${2:\"myString\"});"
+    ],
+    "description": "Get the length of a string"
+  },
+  "OpenGL: Initialize Full": {
+    "prefix": "openglinitfull",
+    "body": [
+      "function setupOpenGL() {",
+      "\topengl_init();",
+      "\topengl_create_context(${1:800}, ${2:600}, \"${3:Ouroboros OpenGL}\");",
+      "",
+      "\t// Basic Shader",
+      "\tstring vertShader = \"#version 330 core\\nlayout (location = 0) in vec3 aPos; void main() { gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0); }\";",
+      "\tstring fragShader = \"#version 330 core\\nout vec4 FragColor; void main() { FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f); }\";",
+      "\tint shaderProgram = opengl_create_shader(vertShader, fragShader);",
+      "",
+      "\t// Main Render Loop",
+      "\twhile (opengl_is_context_valid() != 0) {",
+      "\t\topengl_clear(0.1, 0.1, 0.15, 1.0);",
+      "\t\topengl_use_shader(shaderProgram);",
+      "",
+      "\t\t// TODO: Add drawing calls (e.g., opengl_draw_arrays)",
+      "\t\t$0",
+      "",
+      "\t\topengl_swap_buffers();",
+      "\t}",
+      "",
+      "\topengl_destroy_context();",
+      "}",
+      "",
+      "// Call setupOpenGL in main or another function",
+      "// setupOpenGL();"
+    ],
+    "description": "Setup complete OpenGL initialization and render loop"
+  },
+  "OpenGL: Create Context": {
+    "prefix": "glcreatecontext",
+    "body": [
+      "opengl_create_context(${1:800}, ${2:600}, \"${3:Window Title}\");"
+    ],
+    "description": "Create an OpenGL window and context"
+  },
+  "OpenGL: Clear Screen": {
+    "prefix": "glclear",
+    "body": [
+      "opengl_clear(${1:0.1}, ${2:0.1}, ${3:0.15}, ${4:1.0});"
+    ],
+    "description": "Clear the OpenGL screen"
+  },
+  "OpenGL: Draw Arrays": {
+    "prefix": "gldrawarrays",
+    "body": [
+      "opengl_draw_arrays(${1:4}, ${2:0}, ${3:3}); // GL_TRIANGLES, starting at vertex 0, 3 vertices"
+    ],
+    "description": "Render primitives from array data"
+  },
+  "Vulkan: Initialize (Conceptual)": {
+    "prefix": "vulkaninit",
+    "body": [
+      "vulkan_init();",
+      "vulkan_create_instance(\"${1:My Vulkan App}\");",
+      "vulkan_select_physical_device();",
+      "vulkan_create_logical_device();",
+      "// Assuming window/surface creation happens within stdlib or via other calls",
+      "vulkan_create_surface(0,0); // Placeholder if window is internal",
+      "vulkan_create_swapchain(${2:800}, ${3:600});",
+      "vulkan_create_render_pass();",
+      "// vulkan_create_graphics_pipeline(...);",
+      "// vulkan_create_command_buffers();",
+      "$0"
+    ],
+    "description": "Initialize Vulkan (conceptual high-level)"
+  },
+  "Vulkan: Render Loop (Conceptual)": {
+    "prefix": "vulkanloop",
+    "body": [
+      "int vk_running = 1;",
+      "while (vk_running != 0) {",
+      "\tvk_running = vulkan_draw_frame();",
+      "\t$0",
+      "}"
+    ],
+    "description": "Basic Vulkan render loop (conceptual)"
+  },
+  "Voxel Engine: Create World": {
+    "prefix": "voxelcreate",
+    "body": [
+      "voxel_engine_create();",
+      "voxel_create_world(\"${1:MyWorld}\", ${2:12345}, ${3:256}); // Name, Seed, Size (assuming cubic for simplicity)"
+    ],
+    "description": "Initialize voxel engine and create a world"
+  },
+  "Voxel Engine: Render Frame": {
+    "prefix": "voxelrender",
+    "body": [
+      "voxel_render_frame();"
+    ],
+    "description": "Render a single frame of the voxel world"
+  },
+  "Voxel Engine: Set Block": {
+    "prefix": "voxelsetblock",
+    "body": [
+      "voxel_set_block(${1:10.0}, ${2:5.0}, ${3:12.0}, \"${4:STONE}\");"
+    ],
+    "description": "Set a block in the voxel world"
+  },
+  "GUI: Create Window": {
+    "prefix": "guiwindow",
+    "body": [
+      "init_gui();",
+      "draw_window(\"${1:My Application}\", ${2:640}, ${3:480});",
+      "$0",
+      "// gui_message_loop(); // Usually at the end"
+    ],
+    "description": "Initialize GUI and create a window"
+  },
+  "Generic Class Definition": {
+    "prefix": "genericclass",
+    "body": [
+      "class ${1:Container}<${2:T}> {",
+      "\tprivate ${2:T} value;",
+      "",
+      "\tfunction init(${2:T} initialValue) {",
+      "\t\tthis.value = initialValue;",
+      "\t}",
+      "",
+      "\tpublic ${2:T} getValue() {",
+      "\t\treturn this.value;",
+      "\t}",
+      "",
+      "\tpublic void setValue(${2:T} newValue) {",
+      "\t\tthis.value = newValue;",
+      "\t}",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create a generic class with a type parameter"
+  },
+  "Generic Function Definition": {
+    "prefix": "genericfunction",
+    "body": [
+      "${1:T} ${2:identity}<${1:T}>(${1:T} arg) {",
+      "\treturn arg;",
+      "}"
+    ],
+    "description": "Create a generic function"
+  }
+}

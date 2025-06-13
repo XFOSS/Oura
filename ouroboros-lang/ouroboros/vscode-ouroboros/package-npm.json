@@ -1,0 +1,27 @@
+{
+  "name": "ouroboros-language",
+  "displayName": "Ouroboros Language",
+  "description": "Syntax highlighting and tools for the Ouroboros programming language",
+  "version": "0.5.0",
+  "publisher": "ouroboros-lang",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/vscode-ouroboros"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "scripts": {
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^7.0.0"
+  }
+} 
