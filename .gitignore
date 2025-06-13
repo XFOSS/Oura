@@ -34,3 +34,10 @@ zig-x86_64-linux-0.14.1/
 zig.tar.xz
 .zig-cache/
 zig-out/
+
+# Ignore legacy binaries from ouroboros-lang
+ouroboros-lang/ouroboros/*.o
+ouroboros-lang/ouroboros/*.exe
+ouroboros-lang/ouroboros/vscode-ouroboros/templates/project/ouroc.exe
+ouroboros-lang/ouroboros/vscode-ouroboros/node_modules/
+ouroboros-lang/ouroboros/vscode-ouroboros/*.vsix

@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ouroboros Programming Language - Documentation</title>
+    <!-- Prism Themes: You can switch themes here. 'prism-tomorrow' is dark, 'prism-okaidia', 'prism-coy', 'prism-funky' -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌀</text></svg>">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">
+            <i class="fas fa-infinity"></i> <!-- or fa-dragon, fa-code, fa-atom -->
+            <h1>Ouroboros</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#introduction" class="active"><i class="fas fa-home fa-fw"></i> Introduction</a></li>
+            <li><a href="#getting-started"><i class="fas fa-rocket fa-fw"></i> Getting Started</a></li>
+            <li><a href="#syntax-basics"><i class="fas fa-pen-nib fa-fw"></i> Syntax Basics</a></li>
+            <li><a href="#data-types-variables"><i class="fas fa-shapes fa-fw"></i> Data Types & Variables</a></li>
+            <li><a href="#operators"><i class="fas fa-calculator fa-fw"></i> Operators</a></li>
+            <li><a href="#control-flow"><i class="fas fa-code-branch fa-fw"></i> Control Flow</a></li>
+            <li><a href="#functions"><i class="fas fa-cogs fa-fw"></i> Functions</a></li>
+            <li><a href="#classes-oop"><i class="fas fa-sitemap fa-fw"></i> Classes & OOP</a></li>
+            <li><a href="#structs"><i class="fas fa-cubes fa-fw"></i> Structs</a></li>
+            <li><a href="#modules-imports"><i class="fas fa-puzzle-piece fa-fw"></i> Modules & Imports</a></li>
+            <li><a href="#graphics-apis"><i class="fas fa-palette fa-fw"></i> Graphics APIs</a></li>
+            <li><a href="#voxel-engine"><i class="fas fa-cube fa-fw"></i> Voxel Engine</a></li>
+            <li><a href="#standard-library"><i class="fas fa-book-open fa-fw"></i> Standard Library</a></li>
+            <li><a href="#vs-extension"><i class="fas fa-plug fa-fw"></i> VS Code Extension</a></li>
+            <li><a href="#language-cheatsheet"><i class="fas fa-list-alt fa-fw"></i> Cheatsheet</a></li>
+            <li><a href="#complete-examples"><i class="fas fa-flask fa-fw"></i> More Examples</a></li>
+        </ul>
+        <div class="theme-toggle-container">
+            <button id="theme-btn" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="content">
+        <section id="introduction" class="section">
+            <div class="hero">
+                <h1>Ouroboros Programming Language</h1>
+                <p class="tagline">A modern, statically-typed language with a powerful C backend, designed for performance, graphics programming, and ease of use. Featuring OOP, a built-in voxel engine, and a growing standard library.</p>
+                <div class="hero-buttons">
+                    <a href="#getting-started" class="btn btn-primary"><i class="fas fa-play"></i> Get Started</a>
+                    <a href="https://github.com/FyreFly-TM/ouroboros-lang" class="btn btn-secondary" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>
+                </div>
+            </div>
+
+            <h2><i class="fas fa-star"></i> Welcome to Ouroboros</h2>
+            <p>Ouroboros is a compiled programming language aiming to blend the performance and control of C with modern language features and developer ergonomics. It's designed with a focus on game development, graphics applications, and systems programming, offering first-class support for OpenGL, Vulkan, and an integrated voxel engine.</p>
+            <p>Whether you're building complex 3D worlds, high-performance applications, or simply exploring a new language, Ouroboros provides a robust toolset to bring your ideas to life.</p>
+
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h3>Performance-Oriented</h3>
+                    <p>Compiles through C, enabling optimizations and direct hardware interaction via its VM and stdlib.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-palette"></i>
+                    <h3>Integrated Graphics</h3>
+                    <p>Built-in wrappers for OpenGL and Vulkan, plus a dedicated Voxel Engine API for 3D worlds.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Static Typing</h3>
+                    <p>Strong, static type system helps catch errors at compile-time, with type inference for convenience.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Modern Features</h3>
+                    <p>Classes, structs, modules, and a growing standard library make development productive and enjoyable.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="getting-started" class="section">
+            <h2><i class="fas fa-rocket"></i> Getting Started</h2>
+            <p>Setting up Ouroboros involves compiling its C-based interpreter/compiler. Ensure you have a C compiler like GCC (MinGW on Windows) and Make installed.</p>
+
+            <h3>1. Clone the Repository</h3>
+            <pre><code class="language-bash">git clone https://github.com/FyreFly-TM/ouroboros-lang.git
+cd ouroboros</code></pre>
+            <p><em>Replace `https://github.com/FyreFly-TM/ouroboros-lang.git` with the actual URL of your project.</em></p>
+            
+            <h3>2. Compile the Ouroboros Toolchain</h3>
+            <p>Navigate to the root directory of the cloned project where the `Makefile` (or compilation script) is located.</p>
+            <h4>Using Make (Recommended if a Makefile is provided):</h4>
+            <pre><code class="language-bash">make</code></pre>
+            <h4>Manual Compilation (Example using GCC):</h4>
+            <p>This command assumes all `.c` files are in the root or a flat `src/` directory. Adjust paths as necessary.</p>
+            <pre><code class="language-bash"># Compile all .c files and link. Add necessary libraries like -lm for math.
+# On Windows with MinGW, you might need -lgdi32 for graphics/windowing stubs.
+gcc -Wall -Wextra -std=c11 -o ouroc.exe *.c -lm -lgdi32 
+# (Adjust the above command based on your project structure and dependencies)</code></pre>
+            <p>After successful compilation, you should have an executable (e.g., `ouroc.exe` on Windows, `ouroc` on Linux/macOS) in your project directory.</p>
+
+            <h3>3. Your First Ouroboros Program ("Hello, World!")</h3>
+            <p>Create a file named `hello.ouro` with the following content:</p>
+            <pre><code class="language-ouroboros">// hello.ouro
+function main() {
+    print("Hello, Ouroboros!");
+    return 0; // main function typically returns an int
+}</code></pre>
+
+            <h3>4. Compile and Run</h3>
+            <p>Use the compiled `ouroc` executable to run your program:</p>
+            <pre><code class="language-bash">./ouroc hello.ouro  # On Linux/macOS
+ouroc.exe hello.ouro # On Windows</code></pre>
+
+            <div class="output-box">
+                <div class="output-header">Expected Output:</div>
+<pre>
+==== Program Output ====
+Hello, Ouroboros!
+
+Compilation and execution completed successfully!
+</pre>
+            </div>
+            <p>Congratulations! You've run your first Ouroboros program.</p>
+        </section>
+
+        <section id="syntax-basics" class="section">
+            <h2><i class="fas fa-pen-nib"></i> Language Syntax Basics</h2>
+
+            <h3>Comments</h3>
+            <p>Ouroboros supports C-style single-line and multi-line comments.</p>
+            <pre><code class="language-ouroboros">// This is a single-line comment. It extends to the end of the line.
+
+/*
+  This is a multi-line comment.
+  It can span several lines.
+*/
+
+int x = 10; // Comments can also appear after code.</code></pre>
+
+            <h3>Keywords</h3>
+            <p>Ouroboros has a set of reserved keywords that have special meaning to the compiler. You cannot use these as identifiers (names for variables, functions, etc.).</p>
+            <div class="keyword-grid">
+                <span class="keyword">let</span> <span class="keyword">var</span> <span class="keyword">const</span>
+                <span class="keyword">function</span> <span class="keyword">fn</span> <span class="keyword">return</span>
+                <span class="keyword">if</span> <span class="keyword">else</span> <span class="keyword">while</span> <span class="keyword">for</span>
+                <span class="keyword">class</span> <span class="keyword">struct</span> <span class="keyword">new</span> <span class="keyword">this</span>
+                <span class="keyword">extends</span> <span class="keyword">super</span> <span class="keyword">import</span>
+                <span class="keyword">public</span> <span class="keyword">private</span> <span class="keyword">static</span>
+                <span class="keyword">true</span> <span class="keyword">false</span> <span class="keyword">null</span>
+                <span class="keyword">print</span> <span class="keyword">break</span> <span class="keyword">continue</span>
+                <span class="keyword">int</span> <span class="keyword">long</span> <span class="keyword">float</span> <span class="keyword">double</span>
+                <span class="keyword">bool</span> <span class="keyword">string</span> <span class="keyword">char</span> <span class="keyword">void</span>
+                <span class="keyword">any</span> <span class="keyword">array</span> <span class="keyword">object</span> <span class="keyword">map</span>
+                <span class="keyword">as</span> <span class="keyword">in</span> <span class="keyword">is</span>
+            </div>
+
+            <h3>Basic Program Structure</h3>
+            <p>An Ouroboros program typically consists of function definitions, class/struct declarations, and variable declarations. Execution usually starts from a `main` function if defined, or top-level statements might be executed in order (though a `main` function is conventional for entry).</p>
+            <pre><code class="language-ouroboros">// Import statements (if any) usually go at the top
+import "my_utils";
+
+// Global variable declaration (if supported at global scope)
+let globalMessage = "I'm global!";
+
+// Struct definition
+struct Point {
+    int x;
+    int y;
+}
+
+// Class definition
+class Greeter {
+    string prefix;
+    function Greeter(string p) {
+        this.prefix = p;
+    }
+    void greet(string name) {
+        print(this.prefix + " " + name + "!");
+    }
+}
+
+// Function definition
+int add(int a, int b) {
+    return a + b;
+}
+
+// Main entry point
+function main() {
+    print("Program Start");
+    
+    let p = new Point();
+    p.x = 10;
+    p.y = 20;
+    print("Point: (" + to_string(p.x) + ", " + to_string(p.y) + ")");
+    
+    let myGreeter = new Greeter("Hey there,");
+    myGreeter.greet("Ouroboros User");
+    
+    int sum = add(5, 7);
+    print("Sum: " + to_string(sum));
+    
+    print(globalMessage);
+    
+    return 0; // Exit code
+}
+</code></pre>
+            <p>Statements are typically terminated by a semicolon (<code>;</code>), though it might be optional in some contexts like the last statement in a block in some languages (Ouroboros requires it for clarity).</p>
+        </section>
+
+        <section id="data-types-variables" class="section">
+            <h2><i class="fas fa-shapes"></i> Data Types & Variables</h2>
+
+            <h3>Primitive Data Types</h3>
+            <p>Ouroboros provides several built-in primitive data types:</p>
+            <ul>
+                <li><strong><code>int</code></strong>: Signed 32-bit integer (e.g., <code>-5</code>, <code>0</code>, <code>42</code>).</li>
+                <li><strong><code>long</code></strong>: Signed 64-bit integer (e.g., <code>10000000000L</code>). (Assumed support)</li>
+                <li><strong><code>float</code></strong>: Single-precision 32-bit floating-point number (e.g., <code>3.14</code>, <code>-0.5</code>, <code>2.0e-3</code>).</li>
+                <li><strong><code>double</code></strong>: Double-precision 64-bit floating-point number. (Assumed support)</li>
+                <li><strong><code>bool</code></strong>: Boolean type, can be <code>true</code> or <code>false</code>.</li>
+                <li><strong><code>string</code></strong>: A sequence of characters, enclosed in double quotes (e.g., <code>"Hello"</code>).</li>
+                <li><strong><code>char</code></strong>: A single character, enclosed in single quotes (e.g., <code>'A'</code>). (Assumed support)</li>
+                <li><strong><code>void</code></strong>: Represents the absence of a type, typically used as a return type for functions that do not return a value.</li>
+                <li><strong><code>any</code></strong>: A dynamic type that can hold values of any type (use with caution, type checking is bypassed).</li>
+            </ul>
+            <pre><code class="language-ouroboros">int score = 100;
+float temperature = 23.5;
+bool isActive = true;
+string playerName = "Zypher";
+char initial = 'Z';
+// long bigNumber = 9876543210L; // Assuming 'L' suffix for long
+
+void log_message(string message) {
+    print("[LOG] " + message);
+}
+
+let dynamicValue = 42; // Type inferred as int
+dynamicValue = "now a string"; // If 'let' allows dynamic typing (or if 'any' is implicit)
+// Or explicitly:
+// any flexibleVar = 100;
+// flexibleVar = "text";
+</code></pre>
+
+            <h3>Variable Declarations</h3>
+            <p>Variables store data. Ouroboros supports typed and untyped declarations.</p>
+            <ul>
+                <li><strong><code>let</code></strong>: Declares a variable whose type can be inferred or is dynamic. It can be reassigned.</li>
+                <li><strong><code>var</code></strong>: Similar to `let`, often used for mutable variables with inferred types.</li>
+                <li><strong><code>const</code></strong>: Declares a constant whose value cannot be changed after initialization. Type is usually inferred.</li>
+                <li><strong>Typed Declaration</strong>: Explicitly specify the type using <code>type name = value;</code> (e.g., <code>int count = 0;</code>).</li>
+            </ul>
+
+            <pre><code class="language-ouroboros">// Using 'let' (type inferred, mutable)
+let age = 30;
+age = 31; // OK
+
+let greeting = "Hello";
+greeting = "Hi"; // OK
+
+// Using 'var' (often interchangeable with 'let' for mutable inferred types)
+var score = 0;
+score = 100; // OK
+
+// Using 'const' (immutable, type inferred)
+const PI = 3.14159;
+// PI = 3.14; // This would cause a compile-time error
+
+const MAX_USERS = 1000;
+
+// Explicitly typed declarations (mutable by default unless 'const' is also used)
+int counter = 0;
+counter = counter + 1;
+
+string userName = "Alice";
+userName = "Bob";
+
+// Constant with explicit type
+const bool DEBUG_MODE = true;
+// DEBUG_MODE = false; // Error
+</code></pre>
+            <p>Variables declared with explicit types (like <code>int counter</code>) are generally mutable unless also declared `const` (e.g., <code>const int MAX_SCORE = 10000;</code> - if this syntax is supported).</p>
+
+            <h3>Scope</h3>
+            <p>Ouroboros uses lexical (block) scoping. A variable is accessible from its point of declaration until the end of the block (<code>{...}</code>) in which it was declared. Inner blocks can access variables from outer blocks, but not vice-versa.</p>
+            <pre><code class="language-ouroboros">int globalVar = 10; // Global scope
+
+function testScope() {
+    int functionVar = 20; // Function scope for 'functionVar'
+    print("Inside function: globalVar = " + to_string(globalVar));     // Accesses globalVar
+    print("Inside function: functionVar = " + to_string(functionVar)); // Accesses functionVar
+
+    if (true) {
+        int blockVar = 30; // Block scope for 'blockVar'
+        let anotherBlockVar = 35; // Also block scope
+        
+        print("Inside block: globalVar = " + to_string(globalVar));
+        print("Inside block: functionVar = " + to_string(functionVar));
+        print("Inside block: blockVar = " + to_string(blockVar));
+        
+        globalVar = 11; // Modifies globalVar
+    }
+
+    // print("Outside block: blockVar = " + to_string(blockVar)); // ERROR: blockVar not accessible here
+    print("After block: globalVar = " + to_string(globalVar)); // Shows 11
+    print("After block: functionVar = " + to_string(functionVar));
+}
+
+function main() {
+    testScope();
+    // print("In main: functionVar = " + to_string(functionVar)); // ERROR: functionVar not accessible here
+    return 0;
+}
+</code></pre>
+            <p>Shadowing: If a variable in an inner scope has the same name as one in an outer scope, the inner variable "shadows" (hides) the outer one within that inner scope.</p>
+            <pre><code class="language-ouroboros">int x = 10; // Outer x
+function shadowExample() {
+    print("Outer x before inner block: " + to_string(x)); // Prints 10
+    if (true) {
+        int x = 20; // Inner x, shadows the outer x
+        print("Inner x: " + to_string(x)); // Prints 20
+    }
+    print("Outer x after inner block: " + to_string(x)); // Prints 10 (outer x is unaffected)
+}
+</code></pre>
+
+            <h3>Arrays</h3>
+            <p>Arrays are ordered collections of elements of the same type (for typed arrays) or mixed types (if using `array<any>` or untyped arrays).</p>
+            <pre><code class="language-ouroboros">// Typed array of integers
+int[] scores = [90, 85, 97, 78];
+print("First score: " + to_string(scores[0])); // Accessing element by index (0-based)
+scores[1] = 88; // Modifying an element
+
+// Array of strings
+string[] names = ["Alice", "Bob", "Charlie"];
+print("Second name: " + names[1]);
+
+// Array literal syntax
+let mixedArray = [1, "two", true, 3.14]; // Type might be inferred as array<any>
+
+// Accessing array length (assuming a 'length' property or function)
+// print("Number of scores: " + to_string(scores.length)); // Example, actual syntax may vary
+
+// Iterating through an array (conceptual, 'for..in' or C-style for)
+// for (int i = 0; i < scores.length; i = i + 1) {
+//    print("Score " + to_string(i+1) + ": " + to_string(scores[i]));
+// }
+</code></pre>
+            <p><em>Note: Specific array manipulation methods like `push`, `pop`, or a built-in `length` property depend on the standard library and runtime features. The examples above demonstrate basic declaration and access based on C-style array concepts.</em></p>
+        </section>
+
+        <section id="operators" class="section">
+            <h2><i class="fas fa-calculator"></i> Operators</h2>
+            <p>Ouroboros supports a standard set of operators for arithmetic, comparison, logical operations, and assignment.</p>
+
+            <h3>Arithmetic Operators</h3>
+            <div class="table-container">
+                <table class="styled-table">
+                    <thead><tr><th>Operator</th><th>Description</th><th>Example</th><th>Result</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>+</code></td><td>Addition (numbers) / Concatenation (strings)</td><td><code>5 + 3</code><br/><code>"Hello" + " " + "World"</code></td><td><code>8</code><br/><code>"Hello World"</code></td></tr>
+                        <tr><td><code>-</code></td><td>Subtraction</td><td><code>10 - 4.5</code></td><td><code>5.5</code></td></tr>
+                        <tr><td><code>*</code></td><td>Multiplication</td><td><code>6 * 7</code></td><td><code>42</code></td></tr>
+                        <tr><td><code>/</code></td><td>Division</td><td><code>21 / 4</code></td><td><code>5.25</code> (float division)<br/><code>20 / 4</code> -> <code>5</code> (int division if both operands int, or promotes to float)</td></tr>
+                        <tr><td><code>%</code></td><td>Modulo (remainder of division)</td><td><code>10 % 3</code></td><td><code>1</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Comparison Operators</h3>
+            <p>These operators evaluate to a boolean (<code>true</code> or <code>false</code>).</p>
+            <div class="table-container">
+                <table class="styled-table">
+                    <thead><tr><th>Operator</th><th>Description</th><th>Example</th><th>Result</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>==</code></td><td>Equal to</td><td><code>5 == 5</code><br/><code>"hi" == "hi"</code></td><td><code>true</code><br/><code>true</code></td></tr>
+                        <tr><td><code>!=</code></td><td>Not equal to</td><td><code>5 != 3</code><br/><code>"a" != "b"</code></td><td><code>true</code><br/><code>true</code></td></tr>
+                        <tr><td><code>&lt;</code></td><td>Less than</td><td><code>3 &lt; 5</code></td><td><code>true</code></td></tr>
+                        <tr><td><code>&gt;</code></td><td>Greater than</td><td><code>5 &gt; 3</code></td><td><code>true</code></td></tr>
+                        <tr><td><code>&lt;=</code></td><td>Less than or equal to</td><td><code>3 &lt;= 3</code></td><td><code>true</code></td></tr>
+                        <tr><td><code>&gt;=</code></td><td>Greater than or equal to</td><td><code>5 &gt;= 5</code></td><td><code>true</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Logical Operators</h3>
+            <p>Used to combine boolean expressions.</p>
+            <div class="table-container">
+                <table class="styled-table">
+                    <thead><tr><th>Operator</th><th>Description</th><th>Example (<code>a=true, b=false</code>)</th><th>Result</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>&&</code></td><td>Logical AND</td><td><code>a && b</code></td><td><code>false</code></td></tr>
+                        <tr><td><code>||</code></td><td>Logical OR</td><td><code>a || b</code></td><td><code>true</code></td></tr>
+                        <tr><td><code>!</code></td><td>Logical NOT (unary)</td><td><code>!b</code></td><td><code>true</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <pre><code class="language-ouroboros">bool isAdult = true;
+bool hasPermission = false;
+
+if (isAdult && hasPermission) {
+    print("Access granted.");
+} else if (isAdult || hasPermission) {
+    print("Partial access or adult present.");
+}
+
+if (!isRaining) { // Assuming isRaining is a boolean variable
+    print("It's not raining!");
+}</code></pre>
+
+            <h3>Assignment Operators</h3>
+            <p>Used to assign values to variables.</p>
+            <div class="table-container">
+                <table class="styled-table">
+                    <thead><tr><th>Operator</th><th>Example</th><th>Equivalent To</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>=</code></td><td><code>x = 10</code></td><td>Assigns 10 to x</td></tr>
+                        <tr><td><code>+=</code></td><td><code>x += 5</code></td><td><code>x = x + 5</code></td></tr>
+                        <tr><td><code>-=</code></td><td><code>x -= 3</code></td><td><code>x = x - 3</code></td></tr>
+                        <tr><td><code>*=</code></td><td><code>x *= 2</code></td><td><code>x = x * 2</code></td></tr>
+                        <tr><td><code>/=</code></td><td><code>x /= 4</code></td><td><code>x = x / 4</code></td></tr>
+                        <tr><td><code>%=</code></td><td><code>x %= 3</code></td><td><code>x = x % 3</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <pre><code class="language-ouroboros">int count = 0;
+count += 1; // count is now 1
+print("Count: " + to_string(count));
+
+float total = 100.0;
+total *= 1.1; // Increase by 10%
+print("Total with tax: " + to_string(total));
+</code></pre>
+
+            <h3>Unary Operators (Other than <code>!</code>)</h3>
+            <pre><code class="language-ouroboros">int a = 5;
+int b = -a; // b is -5 (Unary minus)
+int c = +a; // c is 5 (Unary plus, often implicit)
+
+// Increment/Decrement operators (if supported, C-style prefix/postfix)
+// let i = 0;
+// ++i; // i becomes 1 (prefix increment)
+// i++; // i becomes 2 (postfix increment)
+// --i; // i becomes 1
+// i--; // i becomes 0
+</code></pre>
+            <p><em>Note: Support and behavior of prefix/postfix increment/decrement (<code>++</code>, <code>--</code>) depend on their specific implementation in the Ouroboros parser and VM.</em></p>
+        </section>
+
+
+        <!-- Remaining sections will be added progressively -->
+        <section id="control-flow" class="section">
+            <h2><i class="fas fa-code-branch"></i> Control Flow</h2>
+            <p>Control flow statements direct the order in which code is executed.</p>
+
+            <h3><code>if</code> / <code>else if</code> / <code>else</code> Statements</h3>
+            <p>Conditional execution based on boolean expressions.</p>
+            <pre><code class="language-ouroboros">int temperature = 25;
+
+if (temperature > 30) {
+    print("It's hot!");
+} else if (temperature > 20) {
+    print("It's warm.");
+} else if (temperature > 10) {
+    print("It's cool.");
+} else {
+    print("It's cold!");
+}
+
+bool isLoggedIn = true;
+string userRole = "admin";
+
+if (isLoggedIn) {
+    print("User is logged in.");
+    if (userRole == "admin") {
+        print("User is an administrator.");
+    } else {
+        print("User is a standard user.");
+    }
+} else {
+    print("User is not logged in. Please log in.");
+}
+</code></pre>
+
+            <h3><code>while</code> Loops</h3>
+            <p>Repeats a block of code as long as a condition is true.</p>
+            <pre><code class="language-ouroboros">int countdown = 5;
+while (countdown > 0) {
+    print(to_string(countdown) + "...");
+    countdown = countdown - 1; // or countdown -= 1;
+}
+print("Blast off!");
+
+// Example: Summing numbers until a limit
+int sum = 0;
+int currentNumber = 1;
+int limit = 100;
+while (sum <= limit) {
+    sum = sum + currentNumber;
+    print("Added " + to_string(currentNumber) + ", sum is now " + to_string(sum));
+    currentNumber = currentNumber + 1;
+}
+print("Final sum: " + to_string(sum));
+</code></pre>
+
+            <h3><code>for</code> Loops</h3>
+            <p>Ouroboros supports C-style <code>for</code> loops for controlled iteration.</p>
+            <pre><code class="language-ouroboros">// Basic for loop counting up
+for (int i = 0; i < 5; i = i + 1) {
+    print("Current value of i: " + to_string(i));
+}
+// Output: 0, 1, 2, 3, 4
+
+// For loop counting down
+for (int j = 3; j > 0; j = j - 1) {
+    print("j: " + to_string(j));
+}
+// Output: 3, 2, 1
+
+// For loop with different step
+for (int k = 0; k <= 10; k = k + 2) {
+    print("k (even): " + to_string(k));
+}
+// Output: 0, 2, 4, 6, 8, 10
+
+// For loop parts are optional
+// int x = 0;
+// for (; x < 3; ) { // Equivalent to a while loop
+//     print("x = " + to_string(x));
+//     x = x + 1;
+// }
+</code></pre>
+            <p>Ouroboros may also support `for...in` or `for...of` style loops for iterating over collections like arrays or maps in the future. For now, use indexed `for` loops or `while` loops for array iteration if a `length` property is available.</p>
+
+            <h3><code>break</code> and <code>continue</code></h3>
+            <p>These keywords alter the flow within loops:</p>
+            <ul>
+                <li><strong><code>break;</code></strong>: Immediately exits the innermost loop (<code>while</code> or <code>for</code>).</li>
+                <li><strong><code>continue;</code></strong>: Skips the rest of the current iteration and proceeds to the next iteration of the innermost loop.</li>
+            </ul>
+            <pre><code class="language-ouroboros">// Example using break
+print("Searching for number 7 (break example):");
+for (int i = 0; i < 10; i = i + 1) {
+    if (i == 7) {
+        print("Found 7! Breaking loop.");
+        break; // Exit the for loop
+    }
+    print("Checking " + to_string(i));
+}
+
+// Example using continue
+print("Printing odd numbers up to 9 (continue example):");
+for (int j = 0; j < 10; j = j + 1) {
+    if (j % 2 == 0) { // If j is even
+        continue; // Skip the rest of this iteration
+    }
+    print(to_string(j) + " is odd.");
+}
+</code></pre>
+        </section>
+
+        <section id="functions" class="section">
+            <h2><i class="fas fa-cogs"></i> Functions</h2>
+            <p>Functions are blocks of reusable code that perform a specific task. Ouroboros supports both untyped (dynamically typed parameters/return) and typed functions.</p>
+
+            <h3>Declaring Functions</h3>
+            <h4>Untyped Functions (using `function` or `fn` keyword)</h4>
+            <p>Parameter types and return types are not explicitly stated and are typically dynamic or inferred at runtime.</p>
+            <pre><code class="language-ouroboros">// Using 'function' keyword
+function greet(name) {
+    print("Hello, " + name + "!");
+}
+
+// Using 'fn' keyword (if supported as an alias)
+fn add(a, b) {
+    return a + b; // Return type is dynamic based on operation
+}
+
+function noReturnValue() {
+    print("This function doesn't explicitly return anything.");
+    // Implicitly returns a default value (e.g., null or 0 depending on VM)
+}
+</code></pre>
+
+            <h4>Typed Functions</h4>
+            <p>Specify types for parameters and the return value for static type checking and clarity.</p>
+            <pre><code class="language-ouroboros">// Function with typed parameters and a typed return value
+int multiply(int x, int y) {
+    return x * y;
+}
+
+string formatUser(string username, int userId) {
+    return "User: " + username + " (ID: " + to_string(userId) + ")";
+}
+
+// Function with void return type (does not return a value)
+void displayCoordinates(float x, float y, float z) {
+    print("X: " + to_string(x) + ", Y: " + to_string(y) + ", Z: " + to_string(z));
+}
+
+// Function with array parameter (syntax may vary)
+// void printScores(int[] scores) {
+//     for (int i = 0; i < scores.length; i = i + 1) {
+//         print(to_string(scores[i]));
+//     }
+// }
+</code></pre>
+
+            <h3>Calling Functions</h3>
+            <p>Functions are called by their name followed by parentheses, including any arguments.</p>
+            <pre><code class="language-ouroboros">function main() {
+    greet("Ouroboros Developer"); // Calling untyped function
+
+    int product = multiply(7, 6); // Calling typed function
+    print("7 * 6 = " + to_string(product));
+
+    string userInfo = formatUser("Alice", 101);
+    print(userInfo);
+
+    displayCoordinates(10.5, -3.0, 7.2);
+
+    noReturnValue(); // Calling function with no explicit return
+    
+    // let resultFromNoReturn = noReturnValue(); // resultFromNoReturn would get the implicit default
+    // print("Result from noReturnValue: " + to_string(resultFromNoReturn));
+
+    return 0;
+}
+</code></pre>
+
+            <h3>Return Values</h3>
+            <p>Functions use the <code>return</code> keyword to send a value back to the caller. If a function has a non-<code>void</code> return type, it must return a value of that type. <code>void</code> functions do not need a <code>return</code> statement, or can use <code>return;</code> to exit early.</p>
+            <pre><code class="language-ouroboros">bool isPositive(int number) {
+    if (number > 0) {
+        return true;
+    }
+    return false; // Or: } else { return false; }
+}
+
+void checkStatus(int code) {
+    if (code == 200) {
+        print("Status: OK");
+        return; // Exit early
+    }
+    if (code == 404) {
+        print("Status: Not Found");
+        return;
+    }
+    print("Status: Unknown code " + to_string(code));
+}
+</code></pre>
+            
+            <h3>Recursion</h3>
+            <p>Functions can call themselves, a technique known as recursion. This is useful for solving problems that can be broken down into smaller, self-similar subproblems.</p>
+            <pre><code class="language-ouroboros">// Calculate factorial using recursion
+int factorial(int n) {
+    if (n < 0) {
+        print("Error: Factorial of negative number is undefined.");
+        return 0; // Or handle error appropriately
+    }
+    if (n == 0) {
+        return 1; // Base case: 0! = 1
+    }
+    return n * factorial(n - 1); // Recursive step
+}
+
+function main() {
+    int num = 5;
+    print("Factorial of " + to_string(num) + " is " + to_string(factorial(num))); // Output: 120
+    return 0;
+}
+</code></pre>
+        </section>
+        
+        <!-- Placeholder for more sections: Classes & OOP, Structs, Operators, Modules, Graphics, StdLib, VS Extension -->
+        <section id="classes-oop" class="section">
+            <h2><i class="fas fa-sitemap"></i> Classes & Object-Oriented Programming</h2>
+            <p>Ouroboros supports object-oriented programming with classes, allowing for encapsulation, inheritance (<code>extends</code> keyword), and polymorphism (through method overriding).</p>
+
+            <h3>Defining a Class</h3>
+            <p>A class is a blueprint for creating objects. It can contain fields (variables) and methods (functions).</p>
+            <pre><code class="language-ouroboros">class Vehicle {
+    // Fields (member variables)
+    public string make;
+    public string model;
+    private int year;      // Private: accessible only within the Vehicle class
+    static int vehicleCount = 0; // Static: shared among all instances of Vehicle
+
+    // Constructor (conventionally named like the class or 'init')
+    // Ouroboros uses a method, often named 'init' or the class name, as constructor.
+    // Let's assume 'init' for explicit constructor calls by the VM or 'new'.
+    function init(string mk, string mdl, int yr) {
+        this.make = mk;
+        this.model = mdl;
+        this.year = yr;
+        Vehicle.vehicleCount = Vehicle.vehicleCount + 1; // Access static member
+        print("Vehicle created: " + this.make + " " + this.model);
+    }
+
+    // Instance Method
+    public void displayInfo() {
+        print("Make: " + this.make + ", Model: " + this.model + ", Year: " + to_string(this.year));
+    }
+
+    // Another instance method
+    public int getAge(int currentYear) {
+        if (currentYear < this.year) return 0;
+        return currentYear - this.year;
+    }
+
+    // Static method
+    public static void displayTotalVehicles() {
+        print("Total vehicles created: " + to_string(Vehicle.vehicleCount));
+    }
+}
+</code></pre>
+            <p><strong>Key Concepts:</strong></p>
+            <ul>
+                <li><strong><code>class Vehicle { ... }</code></strong>: Defines a new class named `Vehicle`.</li>
+                <li><strong>Fields</strong>: `make`, `model`, `year` are instance fields. Each object of `Vehicle` will have its own copy.</li>
+                <li><strong><code>private int year;</code></strong>: The `private` keyword restricts access to `year` from outside the `Vehicle` class. `public` is usually the default if no modifier is specified (or can be explicitly used).</li>
+                <li><strong><code>static int vehicleCount = 0;</code></strong>: A `static` field is shared by all instances of the class. It belongs to the class itself, not individual objects.</li>
+                <li><strong><code>this</code> keyword</strong>: Refers to the current instance of the class within its methods.</li>
+                <li><strong>Constructor (<code>init</code> method)</strong>: A special method called when an object is created using `new`. It initializes the object's state.</li>
+                <li><strong>Instance Methods</strong>: `displayInfo()`, `getAge()`. These operate on a specific instance of the class (accessed via `this`).</li>
+                <li><strong>Static Methods</strong>: `displayTotalVehicles()`. Called on the class itself (e.g., `Vehicle.displayTotalVehicles()`), not on an instance. Static methods can only access static members directly.</li>
+            </ul>
+
+            <h3>Creating and Using Objects (Instantiation)</h3>
+            <p>Objects are instances of classes, created using the `new` keyword.</p>
+            <pre><code class="language-ouroboros">function main() {
+    // Create (instantiate) objects of the Vehicle class
+    let car1 = new Vehicle(); // Assuming 'new' calls a parameterless 'init' or default
+    car1.init("Toyota", "Camry", 2021); // Call init method
+
+    let car2 = new Vehicle();
+    car2.init("Honda", "Civic", 2022);
+
+    // Call instance methods
+    car1.displayInfo(); // Output: Make: Toyota, Model: Camry, Year: 2021
+    car2.displayInfo(); // Output: Make: Honda, Model: Civic, Year: 2022
+
+    print(car1.make + " is " + to_string(car1.getAge(2024)) + " years old."); // Output: 3 years old
+
+    // Access public fields directly (if allowed by design)
+    // car1.model = "Corolla"; // If 'model' is public
+
+    // Cannot access private fields from outside
+    // print(car1.year); // This would cause a compile-time error
+
+    // Call static method
+    Vehicle.displayTotalVehicles(); // Output: Total vehicles created: 2
+
+    return 0;
+}
+</code></pre>
+
+            <h3>Inheritance (<code>extends</code>)</h3>
+            <p>Inheritance allows a class (subclass or derived class) to inherit fields and methods from another class (superclass or base class).</p>
+            <pre><code class="language-ouroboros">class ElectricVehicle extends Vehicle {
+    public float batteryCapacity; // kWh
+    private float currentCharge;   // kWh
+
+    // Constructor for ElectricVehicle
+    function init(string mk, string mdl, int yr, float capacity) {
+        super.init(mk, mdl, yr); // Call the constructor of the parent (Vehicle) class
+        this.batteryCapacity = capacity;
+        this.currentCharge = capacity; // Start fully charged
+        print("ElectricVehicle created: " + this.make + " with " + to_string(this.batteryCapacity) + " kWh battery.");
+    }
+
+    // New method specific to ElectricVehicle
+    public void charge(float amount) {
+        this.currentCharge = this.currentCharge + amount;
+        if (this.currentCharge > this.batteryCapacity) {
+            this.currentCharge = this.batteryCapacity;
+        }
+        print(this.make + " charged. Current charge: " + to_string(this.currentCharge) + " kWh.");
+    }
+
+    // Override an existing method from Vehicle
+    public void displayInfo() {
+        super.displayInfo(); // Call the parent class's displayInfo method
+        print("Battery: " + to_string(this.currentCharge) + "/" + to_string(this.batteryCapacity) + " kWh");
+    }
+}
+
+function main() {
+    let myTesla = new ElectricVehicle();
+    myTesla.init("Tesla", "Model S", 2023, 100.0);
+    
+    myTesla.displayInfo(); 
+    // Output:
+    // Vehicle created: Tesla Model S
+    // ElectricVehicle created: Tesla with 100 kWh battery.
+    // Make: Tesla, Model: Model S, Year: 2023
+    // Battery: 100/100 kWh
+
+    myTesla.charge(10.0); // Already full, won't exceed capacity
+    myTesla.currentCharge = 50.0; // Simulate usage (if public, better via method)
+    myTesla.charge(25.5);
+    // Output: Tesla charged. Current charge: 75.5 kWh.
+    
+    Vehicle.displayTotalVehicles(); // Output: Total vehicles created: 1 (if only myTesla was made)
+
+    return 0;
+}
+</code></pre>
+            <ul>
+                <li><strong><code>class ElectricVehicle extends Vehicle</code></strong>: `ElectricVehicle` inherits from `Vehicle`.</li>
+                <li><strong><code>super.init(...)</code></strong>: Calls the constructor of the superclass (`Vehicle`). This is typically done as the first line in the subclass constructor.</li>
+                <li><strong>Method Overriding</strong>: `ElectricVehicle` provides its own `displayInfo` method, which overrides the one from `Vehicle`. It can still call the parent's version using `super.displayInfo()`.</li>
+            </ul>
+            
+            <h3>Access Modifiers Recap</h3>
+            <ul>
+                <li><strong><code>public</code></strong>: Members are accessible from anywhere (default if no modifier).</li>
+                <li><strong><code>private</code></strong>: Members are accessible only within the class they are defined in.</li>
+                <li><strong><code>static</code></strong>: Members belong to the class itself, not to instances. Accessed using `ClassName.memberName`.</li>
+            </ul>
+        </section>
+
+        <section id="structs" class="section">
+            <h2><i class="fas fa-cubes"></i> Structs</h2>
+            <p>Structs (structures) are value types used to group related data items. They are simpler than classes and typically don't have methods or inheritance (though specific language implementations vary). In Ouroboros, they are primarily for data aggregation.</p>
+
+            <h3>Defining a Struct</h3>
+            <pre><code class="language-ouroboros">// Define a struct for a 2D point
+struct Point2D {
+    float x;
+    float y;
+}
+
+// Define a struct for a color with RGBA components
+struct ColorRGBA {
+    int r; // Red (0-255)
+    int g; // Green (0-255)
+    int b; // Blue (0-255)
+    int a; // Alpha (0-255, 255 is opaque)
+}
+
+// Struct containing another struct
+struct Rectangle {
+    Point2D topLeft;
+    Point2D bottomRight;
+    ColorRGBA fillColor;
+}
+</code></pre>
+            <p>Struct fields are typically public by default and accessed directly.</p>
+
+            <h3>Creating and Using Struct Instances</h3>
+            <p>Struct instances are created using the `new` keyword, similar to classes, but they are generally simpler and might be allocated differently (e.g., on the stack if the language supports it, though Ouroboros VM likely heap-allocates).</p>
+            <pre><code class="language-ouroboros">function main() {
+    // Create an instance of Point2D
+    let p1 = new Point2D();
+    p1.x = 10.5;
+    p1.y = 20.2;
+
+    print("Point p1: (" + to_string(p1.x) + ", " + to_string(p1.y) + ")");
+
+    // Create an instance of ColorRGBA
+    let redColor = new ColorRGBA();
+    redColor.r = 255;
+    redColor.g = 0;
+    redColor.b = 0;
+    redColor.a = 255; // Opaque red
+
+    print("Red Color: R=" + to_string(redColor.r) + 
+          ", G=" + to_string(redColor.g) + 
+          ", B=" + to_string(redColor.b) + 
+          ", A=" + to_string(redColor.a));
+
+    // Create a Rectangle instance
+    let myRect = new Rectangle();
+    
+    // Assign values to its Point2D fields
+    myRect.topLeft.x = 5.0;    // Note: This assumes p1, p2 are value types or `new` is called.
+    myRect.topLeft.y = 15.0;   // If Point2D is a reference type, topLeft needs `new Point2D()`
+                                // The Ouroboros VM creates default objects, so this direct assignment might work.
+                                // The current C code `initialize_default_instance_fields` in vm.c
+                                // has specific handling for Vector2/3/4 to create sub-objects.
+                                // For other struct types, this needs clarification.
+                                // Assuming for now that fields of struct type are auto-instantiated or require explicit new.
+                                // For safety/clarity in example, let's assume explicit new is better if not auto-defaulted.
+    
+    myRect.topLeft = new Point2D(); // More explicit if not auto-defaulted to an instance
+    myRect.topLeft.x = 5.0;
+    myRect.topLeft.y = 15.0;
+
+    myRect.bottomRight = new Point2D();
+    myRect.bottomRight.x = 25.0;
+    myRect.bottomRight.y = 5.0;
+
+    myRect.fillColor = redColor; // Assigning an existing struct instance
+
+    print("Rectangle top-left: (" + to_string(myRect.topLeft.x) + ", " + to_string(myRect.topLeft.y) + ")");
+    print("Rectangle fill color G: " + to_string(myRect.fillColor.g));
+
+    return 0;
+}
+</code></pre>
+            <p><strong>Key Differences from Classes (Typical):</strong></p>
+            <ul>
+                <li><strong>Purpose</strong>: Structs are primarily for grouping data; classes are for data and behavior (methods).</li>
+                <li><strong>Value vs. Reference Semantics</strong>: Traditionally, structs are value types (copied on assignment/passing), while classes are reference types. Ouroboros's C backend might treat both as heap-allocated objects passed by reference (pointer), so this distinction might be less strict.</li>
+                <li><strong>Inheritance</strong>: Structs usually do not support inheritance.</li>
+                <li><strong>Methods</strong>: Structs typically do not have methods, though some languages allow them. Ouroboros struct definitions shown do not include methods.</li>
+            </ul>
+            <p>In Ouroboros, based on the parser and VM structure, both `class` and `struct` instances are created with `new` and likely managed as objects on the heap. The primary distinction will be the intended use: structs for simpler data records, classes for more complex objects with behavior and potential inheritance hierarchies.</p>
+        </section>
+        
+        <section id="modules-imports" class="section">
+            <h2><i class="fas fa-puzzle-piece"></i> Modules & Imports</h2>
+            <p>Modules help organize code into separate files and namespaces, promoting reusability and maintainability. Ouroboros uses an <code>import</code> statement to bring functionality from other files into the current scope.</p>
+
+            <h3>Creating a Module</h3>
+            <p>A module is simply an Ouroboros file (e.g., <code>utils.ouro</code>) containing functions, classes, structs, or variables that you want to make available elsewhere.</p>
+            
+            <h4>Example Module: <code>string_utils.ouro</code></h4>
+            <pre><code class="language-ouroboros">// file: string_utils.ouro
+
+// A public function that can be imported by other modules
+public function capitalize(string s) {
+    if (string_length(s) == 0) {
+        return "";
+    }
+    // This is a simplified capitalize, real one would handle more cases.
+    // Ouroboros string manipulation capabilities would determine how this is actually done.
+    // For now, let's assume a placeholder behavior or a more complex implementation
+    // using char arrays if direct string char manipulation isn't built-in.
+    // Placeholder:
+    return "CAPITALIZED_" + s; 
+}
+
+// Another public function
+public bool isEmpty(string s) {
+    return string_length(s) == 0;
+}
+
+// A private helper function, not directly importable/accessible from outside this module.
+// (Assuming 'private' at top level of module restricts visibility)
+private function _internalHelper() {
+    print("Internal helper called.");
+}
+
+// A public constant
+public const MAX_STRING_LEN = 1024;
+
+// A class within a module
+public class TextFormatter {
+    private string prefix = "[FORMATTED] ";
+
+    function init(string p) {
+        this.prefix = p;
+    }
+
+    public string format(string text) {
+        _internalHelper(); // Can call private functions within the same module
+        return this.prefix + text;
+    }
+}
+</code></pre>
+            <p><strong>Note on Visibility (<code>public</code>/<code>private</code>) in Modules:</strong></p>
+            <ul>
+                <li>Items marked <code>public</code> are intended to be accessible when the module is imported.</li>
+                <li>Items not marked <code>public</code> (or explicitly marked <code>private</code>, if supported at module level) are typically considered internal to the module and not directly accessible from outside. Ouroboros's exact rules here would be defined by its semantic analyzer.</li>
+            </ul>
+
+            <h3>Importing a Module</h3>
+            <p>Use the <code>import</code> keyword followed by the module name (usually the filename without the <code>.ouro</code> extension, as a string).</p>
+
+            <h4>Example: Using <code>string_utils.ouro</code> in <code>main.ouro</code></h4>
+            <pre><code class="language-ouroboros">// file: main.ouro
+
+// Import the string_utils module.
+// The compiler will search for "string_utils.ouro" in specified paths.
+import "string_utils";
+
+function main() {
+    string myName = "ouroboros";
+    string capitalizedName = capitalize(myName); // Call imported function
+    print(capitalizedName); // Output: CAPITALIZED_ouroboros
+
+    if (isEmpty("")) {
+        print("String is empty.");
+    }
+
+    print("Max string length (from module): " + to_string(MAX_STRING_LEN));
+
+    let formatter = new TextFormatter(">> "); // Create instance of imported class
+    string formattedText = formatter.format("Important message");
+    print(formattedText); // Output: >> Important message (assuming _internalHelper prints too)
+
+    // _internalHelper(); // This would likely cause an error if _internalHelper is private to string_utils
+
+    return 0;
+}
+</code></pre>
+
+            <h3>Module Resolution and Search Paths</h3>
+            <p>When you use <code>import "module_name"</code>, the Ouroboros compiler (<code>ouroc</code>) searches for <code>module_name.ouro</code> in a predefined set of locations:</p>
+            <ol>
+                <li><strong>Current Directory</strong>: The directory where the main file being compiled is located.</li>
+                <li><strong>Standard Library Paths</strong>: Predefined paths where the Ouroboros standard library modules are located (if applicable).</li>
+                <li><strong>User-Specified Search Paths</strong>: Paths provided via a compiler flag, typically <code>-m</code> or <code>--module-path</code>.</li>
+            </ol>
+            <pre><code class="language-bash"># Example: Compiling main.ouro, which imports string_utils.ouro
+# Assume string_utils.ouro is in a subdirectory called 'lib'
+
+ouroc.exe main.ouro -m ./lib 
+# The -m ./lib tells the compiler to also look in the 'lib' subdirectory.
+
+# Multiple search paths can be added:
+ouroc.exe main.ouro -m ./lib -m ./common_modules -m /usr/local/ouroboros_libs
+</code></pre>
+            <p>Hierarchical module names (e.g., <code>import "net.http";</code>) might map to directory structures (e.g., <code>net/http.ouro</code>) depending on the compiler's implementation.</p>
+            <p><strong>Circular Dependencies:</strong> Be cautious with circular dependencies (Module A imports Module B, and Module B imports Module A). While some systems can handle them, they can lead to compilation issues or unexpected behavior. The Ouroboros module loader has a flag (`is_loaded`) to prevent infinite recursion during loading, but the semantic implications would need careful design.</p>
+        </section>
+        
+        <section id="graphics-apis" class="section">
+            <h2><i class="fas fa-palette"></i> Graphics APIs: OpenGL & Vulkan</h2>
+            <p>Ouroboros provides built-in C-level wrappers for OpenGL and Vulkan, making it easier to develop graphics-intensive applications. These wrappers are accessible through standard library functions.</p>
+
+            <h3>OpenGL</h3>
+            <p>OpenGL is a widely adopted cross-platform graphics API. Ouroboros offers functions to manage contexts, shaders, buffers, and rendering.</p>
+            <div class="function-doc">
+                <h4>Key OpenGL Functions (Illustrative)</h4>
+                <p><code>opengl_init()</code>: Initializes the OpenGL subsystem.</p>
+                <p><code>opengl_create_context(int width, int height, string title)</code>: Creates a window and an OpenGL rendering context.</p>
+                <p><code>opengl_is_context_valid() -> bool</code>: Checks if the OpenGL window/context is still active (often used for the main loop condition).</p>
+                <p><code>opengl_clear(float r, float g, float b, float a)</code>: Clears the screen with the specified RGBA color.</p>
+                <p><code>opengl_create_shader(string vertex_src, string fragment_src) -> int</code>: Compiles vertex and fragment shaders and links them into a shader program, returning a program ID.</p>
+                <p><code>opengl_use_shader(int program_id)</code>: Activates the specified shader program.</p>
+                <p><code>opengl_set_uniform_float(int program_id, string name, float value)</code>: Sets a float uniform variable in a shader.</p>
+                <p><code>opengl_create_buffer() -> int</code>: Creates a new buffer object (VBO, EBO), returns buffer ID.</p>
+                <p><code>opengl_bind_buffer(int target, int buffer_id)</code>: Binds a buffer to a target (e.g., <code>GL_ARRAY_BUFFER</code> which is <code>0x8892</code>).</p>
+                <p><code>opengl_buffer_data(int target, int size_bytes, float[] data, int usage)</code>: Uploads data to the currently bound buffer (e.g., <code>GL_STATIC_DRAW</code> which is <code>0x88E4</code>).</p>
+                <p><code>opengl_draw_arrays(int mode, int first, int count)</code>: Renders primitives from array data (e.g., <code>GL_TRIANGLES</code> which is <code>4</code>).</p>
+                <p><code>opengl_swap_buffers()</code>: Swaps the front and back buffers to display the rendered frame.</p>
+                <p><code>opengl_destroy_context()</code>: Cleans up and destroys the OpenGL window and context.</p>
+            </div>
+            <pre><code class="language-ouroboros">// Simplified OpenGL Triangle Example
+function drawTriangleOpenGL() {
+    opengl_init();
+    opengl_create_context(800, 600, "Ouroboros OpenGL Triangle");
+
+    string vertShaderSrc = "#version 330 core\n" +
+                           "layout (location = 0) in vec3 aPos;\n" +
+                           "void main() { gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0); }\n";
+    string fragShaderSrc = "#version 330 core\n" +
+                           "out vec4 FragColor;\n" +
+                           "void main() { FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f); }\n";
+    int shaderProgram = opengl_create_shader(vertShaderSrc, fragShaderSrc);
+
+    // Vertex data for a triangle
+    float vertices[] = [
+        -0.5, -0.5, 0.0, // Bottom-left
+         0.5, -0.5, 0.0, // Bottom-right
+         0.0,  0.5, 0.0  // Top-center
+    ];
+    
+    // In a full setup, you'd create VAO, VBO, set vertex attributes...
+    // The stdlib wrappers might simplify this. For now, assume direct calls:
+    // This part is highly dependent on how abstract the Ouroboros OpenGL stdlib is.
+    // The following is conceptual for a raw-ish binding.
+    /*
+    int vbo = opengl_create_buffer();
+    opengl_bind_buffer(0x8892, vbo); // GL_ARRAY_BUFFER
+    opengl_buffer_data(0x8892, 9 * 4, vertices, 0x88E4); // 9 floats * 4 bytes/float, GL_STATIC_DRAW
+    // opengl_vertex_attrib_pointer(0, 3, 0x1406, false, 3 * 4, 0); // index 0, 3 floats, GL_FLOAT, not normalized, stride, offset
+    // opengl_enable_vertex_attrib_array(0);
+    */
+    // The wrappers might have a higher-level "draw_triangle(vertices)" or similar.
+    // The current `opengl_draw_arrays` implies vertex attributes are already set up.
+    // For this example, we'll assume the wrappers abstract away VBO/VAO setup for simplicity,
+    // or that this example would need more setup code not shown for brevity.
+
+    while (opengl_is_context_valid()) {
+        opengl_clear(0.1, 0.1, 0.15, 1.0); // Dark background
+        opengl_use_shader(shaderProgram);
+        
+        // This call implies vertex data is already bound and configured.
+        // The existing `stdlib.c` stub for opengl_draw_arrays prints fixed vertices.
+        opengl_draw_arrays(4, 0, 3); // GL_TRIANGLES, start at vertex 0, 3 vertices
+
+        opengl_swap_buffers();
+    }
+    opengl_destroy_context();
+}
+
+// main() { drawTriangleOpenGL(); return 0; }
+</code></pre>
+
+            <h3>Vulkan</h3>
+            <p>Vulkan is a newer, more explicit graphics and compute API offering finer-grained control. Ouroboros provides wrappers to simplify common Vulkan setup and rendering tasks.</p>
+            <div class="function-doc">
+                <h4>Key Vulkan Functions (Illustrative)</h4>
+                <p><code>vulkan_init()</code>: Initializes the Vulkan loader.</p>
+                <p><code>vulkan_create_instance(string app_name) -> int</code>: Creates a Vulkan instance.</p>
+                <p><code>vulkan_select_physical_device() -> int</code>: Selects a suitable GPU.</p>
+                <p><code>vulkan_create_logical_device() -> int</code>: Creates a logical device for interaction.</p>
+                <p><code>vulkan_create_surface(void_ptr window_handle, int system_type) -> int</code>: Creates a window surface (platform-dependent).</p>
+                <p><code>vulkan_create_swapchain(int width, int height) -> int</code>: Sets up the image queue for presentation.</p>
+                <p><code>vulkan_create_render_pass() -> int</code>: Defines how rendering operations are performed.</p>
+                <p><code>vulkan_create_graphics_pipeline(string vert_shader_path, string frag_shader_path) -> int</code>: Compiles SPIR-V shaders and creates the rendering pipeline.</p>
+                <p><code>vulkan_create_command_buffers() -> int</code>: Allocates command buffers for recording rendering commands.</p>
+                <p><code>vulkan_draw_frame() -> int</code>: Acquires an image, records commands, submits to queue, and presents. Returns status or if window closed.</p>
+                <p><code>vulkan_cleanup()</code>: Destroys all created Vulkan objects and cleans up resources.</p>
+            </div>
+            <pre><code class="language-ouroboros">// Simplified Vulkan Triangle Example (Conceptual)
+// Note: Real Vulkan setup is much more verbose. These are high-level wrappers.
+function drawTriangleVulkan() {
+    vulkan_init();
+    if (vulkan_create_instance("Ouroboros Vulkan App") == 0) return;
+    if (vulkan_select_physical_device() == 0) return;
+    if (vulkan_create_logical_device() == 0) return;
+    
+    // Window creation and surface would be handled by stdlib.c wrappers
+    // For example, a hypothetical `vulkan_create_window_and_surface(800, 600, "Title")`
+    // The current `vulkan_create_surface` takes an opaque window_handle.
+    // Let's assume the stdlib handles window creation internally for this example for simplicity.
+    // This requires the stdlib's Vulkan windowing to be implemented.
+    // The `vulkan_create_surface` in `stdlib.c` actually creates a Win32 window.
+    // The `window_handle` argument for it seems to be unused if it creates its own.
+
+    // If window handle is needed, Ouroboros would need a way to get it:
+    // let window = create_some_os_window(800, 600, "Vulkan Window");
+    // vulkan_create_surface(window.get_native_handle(), OS_WINDOWS);
+    // For now, assuming internal window management in the stdlib's Vulkan calls.
+    
+    vulkan_create_surface(0, 0); // Placeholder call if window is internal
+                                 // The current C stub creates a window.
+
+    if (vulkan_create_swapchain(800, 600) == 0) return;
+    if (vulkan_create_render_pass() == 0) return;
+
+    // Vulkan expects SPIR-V shaders. The wrapper would take paths to .spv files
+    // or Ouroboros might have a way to compile GLSL to SPIR-V.
+    // The current C stub takes shader source strings, which is unusual for Vulkan.
+    // Let's use the C stub's expectation for the example.
+    string vkVertShader = "#version 450 core\nlayout(location = 0) out vec3 fragColor;\nvec2 positions[3] = vec2[](vec2(0.0, -0.5), vec2(0.5, 0.5), vec2(-0.5, 0.5));\nvoid main() { gl_Position = vec4(positions[gl_VertexIndex], 0.0, 1.0); fragColor = vec3(1.0,0.0,0.0); }";
+    string vkFragShader = "#version 450 core\nlayout(location = 0) in vec3 fragColor;\nlayout(location = 0) out vec4 outColor;\nvoid main() { outColor = vec4(fragColor, 1.0); }";
+    if (vulkan_create_graphics_pipeline(vkVertShader, vkFragShader) == 0) return;
+    
+    // Vertex data (if needed by a higher-level wrapper, Vulkan is usually buffer-based)
+    // float vk_vertices[] = [-0.5, -0.5, 0.0,  0.5, -0.5, 0.0,  0.0, 0.5, 0.0 ];
+    // vulkan_create_vertex_buffer(vk_vertices, sizeof(vk_vertices));
+
+    if (vulkan_create_command_buffers() == 0) return;
+
+    // The current stdlib.c `vulkan_draw_frame` prints simulation messages and
+    // has a basic GDI window loop.
+    // We'll rely on that behavior for this example.
+    int frameResult = 1;
+    while(frameResult != 0) { // Loop until vulkan_draw_frame indicates closure/error
+        frameResult = vulkan_draw_frame(); 
+        // In a real app, handle input, update logic here.
+        // The stdlib's vulkan_draw_frame includes a message pump.
+    }
+
+    vulkan_cleanup();
+}
+
+// main() { drawTriangleVulkan(); return 0; }
+</code></pre>
+            <p>The Ouroboros Vulkan wrappers abstract many complex details. For production Vulkan, direct C/C++ bindings or a more comprehensive graphics library built on Ouroboros would be typical.</p>
+        </section>
+
+        <section id="voxel-engine" class="section">
+            <h2><i class="fas fa-cube"></i> Voxel Engine</h2>
+            <p>Ouroboros includes a high-performance, SIMD-optimized voxel engine with GPU compute capabilities, designed for creating vast, procedural 3D worlds.</p>
+            <div class="function-doc">
+                <h4>Core Voxel Engine API</h4>
+                <p><code>voxel_engine_create()</code>: Initializes the voxel engine systems.</p>
+                <p><code>voxel_create_world(string name, int seed, int size)</code>: Creates a new voxel world with specified dimensions and a seed for procedural generation.</p>
+                <p><code>voxel_generate_terrain(int seed, float scale, int octaves, float persistence)</code>: Procedurally generates terrain using Perlin noise and GPU acceleration.</p>
+                <p><code>voxel_set_camera(float x, float y, float z, float yaw, float pitch, float fov)</code>: Sets the camera's position, orientation, and field of view.</p>
+                <p><code>voxel_render_frame()</code>: Renders one frame of the voxel world, including culling, mesh generation, lighting, and post-processing.</p>
+                <p><code>voxel_set_block(float x, float y, float z, string block_type)</code>: Places or changes a block at the given world coordinates.</p>
+                <p><code>voxel_get_block(float x, float y, float z) -> string</code>: Returns the type of block at the specified coordinates.</p>
+                <p><code>voxel_enable_physics()</code>: Activates physics simulation (collision, gravity).</p>
+                <p><code>voxel_set_lighting(float sun_x, float sun_y, float sun_z, float intensity, float r, float g, float b)</code>: Configures global illumination, sun direction, and color.</p>
+                <p><code>voxel_save_world(string path)</code> / <code>voxel_load_world(string path)</code>: Saves or loads world data.</p>
+                <p><code>voxel_performance_stats()</code>: Prints detailed performance metrics (FPS, triangles, memory, etc.).</p>
+            </div>
+
+            <pre><code class="language-ouroboros">// Example: Creating and interacting with a simple voxel world
+function setupVoxelExperience() {
+    voxel_engine_create();
+    
+    // Create a world with progress updates (uses GUI stubs for labels)
+    voxel_create_world_with_progress("MyVoxelScape", 12345, 512); 
+    // Alternative without progress GUI:
+    // voxel_create_world("MyVoxelScape", 12345, 512); 
+
+    // Generate terrain using more detailed procedural generation
+    voxel_generate_terrain_with_progress(12345, 0.015, 6, 0.6);
+    // Alternative without progress GUI:
+    // voxel_generate_terrain(12345, 0.015, 6, 0.6);
+
+
+    // Set up lighting (sun from top-right-ish, white light)
+    lighting_setup_with_progress(0.7, 0.8, 0.5, 1.0, 1.0, 1.0); 
+    // Alternative without progress GUI:
+    // voxel_set_lighting(0.7, 0.8, 0.5, 1.0, 1.0, 1.0, 0.95);
+
+    voxel_set_camera(64.0, 80.0, 64.0, 45.0, -30.0, 70.0); // Position, Yaw, Pitch, FOV
+    voxel_enable_physics();
+
+    // Simulate a simple game loop (replace with actual game loop using opengl_is_context_valid or similar)
+    int frame = 0;
+    while (frame < 10) { // Limited loop for this example
+        // In a real game, update camera based on input:
+        // cam_x = cam_x + input_dx; voxel_set_camera(...);
+
+        if (frame == 2) {
+            voxel_set_block(60.0, 70.0, 60.0, "STONE");
+            print("Placed a STONE block.");
+        }
+        if (frame == 5) {
+            string blockType = voxel_get_block(60.0, 70.0, 60.0);
+            print("Block at (60,70,60) is: " + blockType); // Should be STONE
+        }
+
+        voxel_render_frame();
+        // opengl_swap_buffers(); // If rendering to an OpenGL window managed separately
+
+        frame = frame + 1;
+        // A small delay or sync mechanism would be here in a real app
+    }
+
+    voxel_performance_stats();
+    voxel_save_world("my_world_save.vxdat");
+}
+
+// main() { setupVoxelExperience(); return 0; }
+</code></pre>
+            <p>The voxel engine aims for high performance through SIMD optimizations, GPU compute shaders for mesh generation and culling, and advanced data structures like octrees.</p>
+        </section>
+        
+        <section id="standard-library" class="section">
+            <h2><i class="fas fa-book-open"></i> Standard Library</h2>
+            <p>Ouroboros provides a standard library with essential functions for I/O, string manipulation, graphics, networking, and more. These are typically implemented as C functions wrapped for Ouroboros script access.</p>
+
+            <h3>Core Functions</h3>
+            <div class="function-doc">
+                <h4><code>print(string message)</code></h4>
+                <p>Prints the given message to the standard output, followed by a newline.</p>
+                <pre><code class="language-ouroboros">print("Hello, Ouroboros!");
+int value = 42;
+print("The value is: " + to_string(value));</code></pre>
+            </div>
+            <div class="function-doc">
+                <h4><code>get_input(string prompt) -> string</code></h4>
+                <p>Displays a prompt to the user and returns the string they enter. (Current stub returns "w")</p>
+                <pre><code class="language-ouroboros">string name = get_input("Enter your name: ");
+print("Hello, " + name + "!");</code></pre>
+            </div>
+
+            <h3>String Utilities</h3>
+            <div class="function-doc">
+                <h4><code>to_string(any value) -> string</code></h4>
+                <p>Converts a value of any basic type (int, float, bool) to its string representation.</p>
+                <pre><code class="language-ouroboros">string s1 = to_string(123);     // "123"
+string s2 = to_string(3.14159); // "3.14159" (approx)
+string s3 = to_string(true);    // "true"
+</code></pre>
+            </div>
+            <div class="function-doc">
+                <h4><code>string_concat(string s1, string s2) -> string</code></h4>
+                <p>Concatenates two strings. The <code>+</code> operator is often overloaded for this.</p>
+                <pre><code class="language-ouroboros">string part1 = "Ouro";
+string part2 = "boros";
+string combined = string_concat(part1, part2); // "Ouroboros"
+// Typically, you'd use: let combined = part1 + part2;
+</code></pre>
+            </div>
+            <div class="function-doc">
+                <h4><code>string_length(string s) -> int</code></h4>
+                <p>Returns the number of characters in the string.</p>
+                <pre><code class="language-ouroboros">int len = string_length("Hello"); // 5
+</code></pre>
+            </div>
+
+            <h3>GUI (Simplified/Stubbed)</h3>
+            <div class="function-doc">
+                <h4><code>init_gui()</code></h4><p>Initializes the GUI system (currently a stub).</p>
+                <h4><code>draw_window(string title, int width, int height)</code></h4><p>Draws/creates a window (stub).</p>
+                <h4><code>draw_label(string text)</code></h4><p>Draws a text label (stub).</p>
+                <h4><code>draw_button(string label)</code></h4><p>Draws a button (stub).</p>
+                <h4><code>gui_message_loop()</code></h4><p>Starts the GUI event processing loop (stub).</p>
+                <pre><code class="language-ouroboros">init_gui();
+draw_window("My App", 800, 600);
+draw_label("Welcome to Ouroboros GUI!");
+draw_button("Click Me");
+// gui_message_loop(); // This would block if it were a real GUI loop
+</code></pre>
+            </div>
+            
+            <h3>Networking (Simplified/Stubbed)</h3>
+             <div class="function-doc">
+                <h4><code>connect_to_server(string address, int port) -> int</code></h4><p>Attempts to connect to a server (stub, returns 1 for success).</p>
+                <h4><code>http_get(string url) -> string</code></h4><p>Performs an HTTP GET request (stub, returns "Stub HTTP response").</p>
+                <pre><code class="language-ouroboros">int connection_status = connect_to_server("example.com", 80);
+if (connection_status > 0) { print("Connected!"); }
+
+string web_content = http_get("https://api.example.com/info");
+print("Web Content: " + web_content);
+</code></pre>
+            </div>
+
+            <h3>Events & Timers (Simplified/Stubbed)</h3>
+             <div class="function-doc">
+                <h4><code>register_event(string event_name, string callback_function_name)</code></h4><p>Registers a callback for an event (stub).</p>
+                <h4><code>trigger_event(string event_name)</code></h4><p>Triggers a named event (stub).</p>
+                <h4><code>set_timeout(string callback_function_name, int milliseconds)</code></h4><p>Sets a timer to call a function after a delay (stub).</p>
+                <pre><code class="language-ouroboros">// Conceptual - Ouroboros needs dynamic function calls or function pointers for real callbacks
+// function my_timer_callback() { print("Timer fired!"); }
+// function my_event_handler() { print("Event occurred!"); }
+
+// register_event("userLogin", "my_event_handler");
+// set_timeout("my_timer_callback", 2000); // Call after 2 seconds
+
+// trigger_event("userLogin");
+</code></pre>
+            </div>
+            <p><em>Many standard library functions, especially for GUI, networking, and advanced graphics, are currently stubs in the C code. Their Ouroboros usage shown here is based on their intended signatures.</em></p>
+        </section>
+
+        <section id="vs-extension" class="section">
+            <h2><i class="fas fa-plug"></i> Visual Studio Code Extension</h2>
+            <p>An official Visual Studio Code extension enhances the Ouroboros development experience with syntax highlighting, snippets, and potential build/run integration.</p>
+
+            <div class="feature-grid">
+                <div class="vs-feature">
+                    <i class="fas fa-palette"></i>
+                    <h4>Syntax Highlighting</h4>
+                    <p>Accurate and theme-aware highlighting for <code>.ouro</code> files, covering keywords, types, comments, strings, numbers, and operators.</p>
+                </div>
+                <div class="vs-feature">
+                    <i class="fas fa-magic"></i>
+                    <h4>Code Snippets</h4>
+                    <p>Quickly insert common Ouroboros constructs like function definitions, class templates, loops, and conditional blocks.</p>
+                </div>
+                 <div class="vs-feature">
+                    <i class="fas fa-cogs"></i>
+                    <h4>Build Integration (Planned)</h4>
+                    <p>Future support for compiling and running Ouroboros programs directly from VS Code (e.g., via F5 or a command).</p>
+                </div>
+                 <div class="vs-feature">
+                    <i class="fas fa-file-code"></i>
+                    <h4>File Icons</h4>
+                    <p>Custom file icons for <code>.ouro</code> files in the explorer for better visual identification.</p>
+                </div>
+            </div>
+            
+            <h3>Installation from VSIX (Manual)</h3>
+            <p>If you have the <code>.vsix</code> package file for the extension:</p>
+            <ol class="install-steps">
+                <li>
+                    <h4>Open VS Code</h4>
+                    <p>Launch your Visual Studio Code editor.</p>
+                </li>
+                <li>
+                    <h4>Go to Extensions View</h4>
+                    <p>Click the Extensions icon in the Activity Bar on the side of the window, or press <code>Ctrl+Shift+X</code> (Windows/Linux) or <code>Cmd+Shift+X</code> (macOS).</p>
+                </li>
+                <li>
+                    <h4>Install from VSIX</h4>
+                    <p>Click the "..." (More Actions) menu in the top-right corner of the Extensions view, and select "Install from VSIX...".</p>
+                    <img src="https://code.visualstudio.com/assets/docs/editor/extension-marketplace/install-from-vsix.png" alt="Install from VSIX command in VS Code" class="screenshot" style="max-width: 400px;">
+                </li>
+                <li>
+                    <h4>Select the <code>.vsix</code> File</h4>
+                    <p>Navigate to the location where you saved the <code>ouroboros-language-0.1.0.vsix</code> (or similar) file and select it.</p>
+                </li>
+                 <li>
+                    <h4>Restart VS Code (If Prompted)</h4>
+                    <p>VS Code might prompt you to restart to enable the extension fully.</p>
+                </li>
+            </ol>
+
+            <h3>Using Snippets</h3>
+            <p>Once installed, type a snippet prefix in an <code>.ouro</code> file and press <code>Tab</code> or <code>Enter</code> to expand it.</p>
+            <div class="table-container">
+                <table class="styled-table">
+                    <thead><tr><th>Prefix</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>main</code></td><td>Creates a <code>main</code> function template.</td></tr>
+                        <tr><td><code>func</code> or <code>function</code></td><td>Creates a standard function declaration.</td></tr>
+                        <tr><td><code>class</code></td><td>Creates a class definition template.</td></tr>
+                        <tr><td><code>struct</code></td><td>Creates a struct definition template.</td></tr>
+                        <tr><td><code>if</code></td><td>Creates an <code>if</code> statement.</td></tr>
+                        <tr><td><code>ifelse</code></td><td>Creates an <code>if-else</code> statement.</td></tr>
+                        <tr><td><code>while</code></td><td>Creates a <code>while</code> loop.</td></tr>
+                        <tr><td><code>for</code></td><td>Creates a C-style <code>for</code> loop.</td></tr>
+                        <tr><td><code>print</code></td><td>Inserts a <code>print("");</code> statement.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <pre><code class="language-ouroboros">// Type 'main' and press Tab:
+function main() {
+    print("Hello from snippet!");
+    return 0;
+}
+
+// Type 'class' and press Tab:
+class MyClass {
+    // fields
+    
+    function init() {
+        // constructor
+    }
+
+    // methods
+}
+</code></pre>
+            <p>Refer to the extension's marketplace page or included documentation for the most up-to-date list of features and snippets.</p>
+        </section>
+
+        <section id="language-cheatsheet" class="section">
+            <h2><i class="fas fa-list-alt"></i> Ouroboros Language Cheatsheet</h2>
+            <p>A quick reference guide with concise examples for core Ouroboros constructs.</p>
+
+            <h4>1. Hello World & Basic Output</h4>
+            <pre><code class="language-ouroboros">function main() { print("Hello, Ouroboros!"); return 0; }</code></pre>
+
+            <h4>2. Variables & Types</h4>
+            <pre><code class="language-ouroboros">int age = 30;
+float pi = 3.14;
+bool active = true;
+string name = "Alice";
+let dynamicVar = 100; // Type inferred
+const MAX_VAL = 999;</code></pre>
+
+            <h4>3. Comments</h4>
+            <pre><code class="language-ouroboros">// Single-line comment
+/* Multi-line
+   comment */</code></pre>
+
+            <h4>4. Arithmetic Operators</h4>
+            <pre><code class="language-ouroboros">int sum = 5 + 3;      // 8
+int diff = 10 - 4;    // 6
+int prod = 6 * 7;     // 42
+float quot = 20.0 / 4.0; // 5.0
+int rem = 10 % 3;     // 1</code></pre>
+
+            <h4>5. Comparison & Logical Operators</h4>
+            <pre><code class="language-ouroboros">bool isEqual = (5 == 5);    // true
+bool isGreater = (10 > 2);  // true
+bool check = (isEqual && isGreater); // true
+bool checkOr = (false || true); // true
+bool notFalse = !false;        // true</code></pre>
+
+            <h4>6. Conditional: <code>if-else if-else</code></h4>
+            <pre><code class="language-ouroboros">int x = 10;
+if (x > 10) { print("Greater"); }
+else if (x < 10) { print("Less"); }
+else { print("Equal"); } // Prints "Equal"</code></pre>
+
+            <h4>7. Loop: <code>while</code></h4>
+            <pre><code class="language-ouroboros">int i = 0;
+while (i < 3) {
+    print("while: " + to_string(i));
+    i = i + 1;
+}</code></pre>
+
+            <h4>8. Loop: <code>for</code></h4>
+            <pre><code class="language-ouroboros">for (int j = 0; j < 3; j = j + 1) {
+    print("for: " + to_string(j));
+}</code></pre>
+
+            <h4>9. Functions (Typed)</h4>
+            <pre><code class="language-ouroboros">int add(int a, int b) { return a + b; }
+void say(string msg) { print(msg); }
+int result = add(7, 8); // 15
+say("Function call");</code></pre>
+
+            <h4>10. Struct Definition & Usage</h4>
+            <pre><code class="language-ouroboros">struct Vector2 { float x; float y; }
+let v = new Vector2();
+v.x = 1.0; v.y = 2.5;
+print("Vector: " + to_string(v.x));</code></pre>
+
+            <h4>11. Class Definition & Usage</h4>
+            <pre><code class="language-ouroboros">class Counter {
+    private int count = 0;
+    public void increment() { this.count = this.count + 1; }
+    public int getValue() { return this.count; }
+}
+let c = new Counter();
+c.increment();
+print("Count: " + to_string(c.getValue())); // Count: 1</code></pre>
+
+            <h4>12. Class Inheritance</h4>
+            <pre><code class="language-ouroboros">class Animal { void speak() { print("Generic sound"); } }
+class Dog extends Animal { void speak() { print("Woof!"); } }
+let myDog = new Dog();
+myDog.speak(); // Woof!</code></pre>
+
+            <h4>13. Static Members</h4>
+            <pre><code class="language-ouroboros">class MathUtils {
+    public static float PI = 3.14159;
+    public static int triple(int n) { return n * 3; }
+}
+print("PI: " + to_string(MathUtils.PI));
+print("3*5: " + to_string(MathUtils.triple(5)));</code></pre>
+
+            <h4>14. Arrays (Conceptual based on parser)</h4>
+            <pre><code class="language-ouroboros">int[] numbers = [10, 20, 30];
+// print(to_string(numbers[1])); // Accessing: 20 (Actual access depends on VM/stdlib array impl.)
+</code></pre>
+
+            <h4>15. Modules & Imports</h4>
+            <pre><code class="language-ouroboros">// In file: mymath.ouro
+// public int multiply(int a, int b) { return a * b; }
+
+// In main file:
+// import "mymath";
+// print(to_string(multiply(4, 5))); // 20
+</code></pre>
+        </section>
+
+        <section id="complete-examples" class="section">
+            <h2><i class="fas fa-flask"></i> More Complete Examples</h2>
+            <p>These examples demonstrate how various Ouroboros features can be combined to build small applications.</p>
+
+            <div class="function-doc">
+            <h4>Example 1: Simple Number Guessing Game</h4>
+            <p>A basic command-line game where the user tries to guess a predefined number.</p>
+            <pre><code class="language-ouroboros">// guessing_game.ouro
+function main() {
+    int secretNumber = 7; // The number to guess
+    int attempts = 3;
+    bool guessedCorrectly = false;
+
+    print("Welcome to the Number Guessing Game!");
+    print("I'm thinking of a number between 1 and 10.");
+    print("You have " + to_string(attempts) + " attempts.");
+
+    while (attempts > 0) {
+        print("Attempts left: " + to_string(attempts));
+        string inputStr = get_input("Enter your guess: ");
+        
+        // Basic input validation/conversion (assuming get_input returns string, needs to_int)
+        // For now, let's assume input is magically an int for simplicity of example,
+        // or that a to_int() function exists in stdlib.
+        // int guess = to_int(inputStr); // Hypothetical function
+        int guess = 0; // Placeholder
+        if (inputStr == "7") guess = 7; // Manual "conversion" for this stubbed example
+        else if (inputStr == "5") guess = 5;
+        // ... add more for testing
+
+        if (guess == secretNumber) {
+            print("Congratulations! You guessed it!");
+            guessedCorrectly = true;
+            break; 
+        } else if (guess < secretNumber) {
+            print("Too low!");
+        } else {
+            print("Too high!");
+        }
+        attempts = attempts - 1;
+    }
+
+    if (!guessedCorrectly) {
+        print("Sorry, you ran out of attempts. The number was " + to_string(secretNumber) + ".");
+    }
+    return 0;
+}
+</code></pre>
+            <p><em>Note: This example relies on a hypothetical <code>to_int()</code> function or improved <code>get_input</code> behavior, as the current <code>get_input</code> stub returns "w".</em></p>
+            </div>
+
+            <div class="function-doc">
+            <h4>Example 2: Simple Bank Account Class</h4>
+            <p>Demonstrates class definition, methods, private fields, and basic object interaction.</p>
+            <pre><code class="language-ouroboros">// bank_account.ouro
+class BankAccount {
+    private string accountNumber;
+    private string accountHolderName;
+    private float balance;
+
+    // Constructor (using 'init' convention)
+    function init(string accNum, string holderName, float initialDeposit) {
+        this.accountNumber = accNum;
+        this.accountHolderName = holderName;
+        if (initialDeposit >= 0.0) {
+            this.balance = initialDeposit;
+        } else {
+            this.balance = 0.0;
+            print("Warning: Initial deposit cannot be negative. Balance set to 0.");
+        }
+        print("Account created for " + this.accountHolderName + " with number " + this.accountNumber);
+    }
+
+    public void deposit(float amount) {
+        if (amount > 0.0) {
+            this.balance = this.balance + amount;
+            print("Deposited: $" + to_string(amount) + ". New balance: $" + to_string(this.balance));
+        } else {
+            print("Deposit amount must be positive.");
+        }
+    }
+
+    public bool withdraw(float amount) {
+        if (amount <= 0.0) {
+            print("Withdrawal amount must be positive.");
+            return false;
+        }
+        if (amount > this.balance) {
+            print("Insufficient funds for withdrawal of $" + to_string(amount) + ".");
+            return false;
+        }
+        this.balance = this.balance - amount;
+        print("Withdrew: $" + to_string(amount) + ". New balance: $" + to_string(this.balance));
+        return true;
+    }
+
+    public float getBalance() {
+        return this.balance;
+    }
+
+    public void displayAccountInfo() {
+        print("Account Holder: " + this.accountHolderName);
+        print("Account Number: " + this.accountNumber);
+        print("Current Balance: $" + to_string(this.balance));
+    }
+}
+
+function main() {
+    let acc1 = new BankAccount();
+    acc1.init("ACC1001", "Alice Wonderland", 500.0);
+
+    let acc2 = new BankAccount();
+    acc2.init("ACC1002", "Bob The Builder", 100.0);
+
+    print("\n--- Alice's Account ---");
+    acc1.displayAccountInfo();
+    acc1.deposit(150.0);
+    acc1.withdraw(50.0);
+    acc1.withdraw(1000.0); // Should fail
+
+    print("\n--- Bob's Account ---");
+    acc2.displayAccountInfo();
+    acc2.deposit(25.75);
+    bool success = acc2.withdraw(70.0);
+    if (success) { print("Bob's withdrawal successful."); }
+
+    print("\nFinal Balances:");
+    print("Alice: $" + to_string(acc1.getBalance()));
+    print("Bob: $" + to_string(acc2.getBalance()));
+    
+    return 0;
+}
+</code></pre>
+            </div>
+
+            <div class="function-doc">
+                <h4>Example 3: Using Voxel Engine Progress Functions</h4>
+                <p>This example demonstrates how the progress-bar integrated functions from the Voxel Engine might be used. The actual progress bars are simulated with `print` and `draw_label` calls in the C stubs.</p>
+                <pre><code class="language-ouroboros">// voxel_progress_demo.ouro
+
+// Assume init_gui() is called if draw_label is used for progress bars
+// For a console app, these draw_label calls would just print to console.
+
+function main() {
+    print("--- Voxel World Creation with Progress ---");
+    // These functions will print a series of "progress bar" updates via draw_label
+    voxel_create_world_with_progress("EpicWorld", 42, 1024);
+    
+    print("\n--- Advanced Terrain Generation with Progress ---");
+    voxel_generate_terrain_with_progress(42, 0.02, 7, 0.55);
+
+    print("\n--- Photorealistic Lighting Setup with Progress ---");
+    lighting_setup_with_progress(0.6, 0.75, 0.4, 1.2, 0.95, 0.9, 0.85);
+    
+    print("\n--- GPU Systems Initialization with Progress ---");
+    gpu_systems_init_with_progress();
+
+    print("\n--- Simple Loading Animation Example ---");
+    loading_animation("Fetching resources..."); // Prints a few frames of animation
+
+    print("\nSetup complete!");
+    return 0;
+}
+</code></pre>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer> <!-- Changed to semantic footer element -->
+        <p>&copy; 2024 Ouroboros Programming Language. Designed with <i class="fas fa-code"></i> and <i class="fas fa-heart"></i>.</p>
+        <p>
+            <a href="#introduction">Back to Top <i class="fas fa-arrow-up"></i></a>
+            <a href="https://github.com/your-repo/ouroboros" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+        </p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="prism-ouroboros.js"></script> <!-- Load custom language definition -->
+    <script src="script.js"></script>
+</body>
+</html>
