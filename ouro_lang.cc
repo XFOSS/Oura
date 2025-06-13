@@ -146,7 +146,11 @@ struct CallExpr { std::string name; std::vector<ExprPtr> args; };
 struct AwaitExpr { ExprPtr expr; };
 
 using ExprVariant = std::variant<NumberExpr, StringExpr, IdentExpr, BinaryExpr, CallExpr, AwaitExpr>;
-struct Expr { ExprVariant value; };
+struct Expr { 
+    ExprVariant value;
+    template <typename T>
+    explicit Expr(T&& v) : value(std::forward<T>(v)) {}
+};
 
 // #### Statements
 struct VarDeclStmt { std::string name; std::string type; ExprPtr value; };
@@ -165,7 +169,11 @@ struct ForStmt { std::string var; ExprPtr start; ExprPtr end; std::vector<StmtPt
 struct ReturnStmt { ExprPtr value; };
 
 using StmtVariant = std::variant<VarDeclStmt, FnDeclStmt, IfStmt, ForStmt, ReturnStmt>;
-struct Stmt { StmtVariant value; };
+struct Stmt {
+    StmtVariant value;
+    template <typename T>
+    explicit Stmt(T&& v) : value(std::forward<T>(v)) {}
+};
 
 // ### Parser
 class Parser {
@@ -442,6 +450,7 @@ class Interpreter {
     std::map<std::string, Value> env;
     std::map<std::string, Function> functions;
     Value return_value;
+    std::vector<StmtPtr> program;
 
 public:
     Interpreter() {
@@ -468,7 +477,10 @@ public:
         auto ast = parser.parse();
         TypeChecker checker;
         checker.check(ast);
-        for (const auto& s : ast) execute_stmt(*s);
+        for (auto& s : ast) {
+            program.push_back(std::move(s));
+            execute_stmt(*program.back());
+        }
     }
 
 private:
@@ -478,8 +490,8 @@ private:
             const auto& v = std::get<VarDeclStmt>(stmt.value);
             e[v.name] = evaluate_expr(*v.value, e);
         } else if (std::holds_alternative<FnDeclStmt>(stmt.value)) {
-            const auto& fn = std::get<FnDeclStmt>(stmt.value);
-            functions[fn.name] = [this, fn](const std::vector<Value>& args, Interpreter& interp) -> Value {
+            auto& fn = std::get<FnDeclStmt>(stmt.value);
+            functions[fn.name] = [this, &fn](const std::vector<Value>& args, Interpreter& interp) -> Value {
                 std::map<std::string, Value> fn_env = env;
                 for (size_t i = 0; i < args.size() && i < fn.params.size(); ++i) {
                     fn_env[fn.params[i].first] = args[i];
