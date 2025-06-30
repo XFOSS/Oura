@@ -36,6 +36,21 @@ Run its tests using:
 zig build mod-test
 ```
 
+## Running Tests
+
+The CMake build ships with a small test suite. Configure and build in a
+`build` directory then invoke `ctest`:
+
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build .
+ctest --output-on-failure
+```
+
+Additional details including the optional fuzzing harness are covered in
+`docs/testing.md`.
+
 ## Documentation and Language Specification
 
 Detailed design notes live in the `docs/` directory. The evolving language
