@@ -50,4 +50,3 @@
 * Swift’s protocol‑oriented design balances flexibility and safety. Property wrappers and ARC could inspire hybrid ownership semantics in Ouroboros.
 * Further exploration of algebraic effect systems or refinement types may enhance Ouroboros without sacrificing determinism.
 
-*Expansion of the remaining sections in the same scholarly tone is recommended for full document coherence.*
