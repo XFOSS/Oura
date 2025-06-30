@@ -22,6 +22,19 @@ A Zig build script is also included (`build.zig`) for environments with the Zig 
 
 The project now includes a CMake-based build system, tests, container setup, and documentation. Run `cmake` in a `build` directory to configure and build the modules in `src/`.
 
+## Running Tests
+
+Execute the unit tests using CMake's build directory:
+
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build .
+ctest --output-on-failure
+```
+
+See [docs/testing.md](docs/testing.md) for additional details and fuzzing instructions.
+
 ## Zig Build with Modules
 
 The `ouro_mod` directory showcases a minimal C++23 module setup. Build and run the modular example with:
