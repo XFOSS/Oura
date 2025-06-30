@@ -43,6 +43,9 @@ specification is provided in `OuroLang_Spec_2_0.md` and outlines syntax,
 semantics and concurrency features currently implemented. Community
 contributions are welcome—see `docs/contrib.md` for guidelines.
 
+An expanded comparison between Ouroboros and Swift 6.2 can be found in
+`docs/swift_comparison.md`.
+
 ## Fuzzing Tools
 
 Experimental AFL++ harnesses live in `tools/fuzz`.  They can be
