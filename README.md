@@ -40,8 +40,10 @@ zig build mod-test
 
 Detailed design notes live in the `docs/` directory. The evolving language
 specification is provided in `OuroLang_Spec_2_0.md` and outlines syntax,
-semantics and concurrency features currently implemented. Community
-contributions are welcome—see `docs/contrib.md` for guidelines.
+semantics and concurrency features currently implemented. The specification now
+includes a **Types** section describing primitive datatypes and short examples
+of control flow. Community contributions are welcome—see `docs/contrib.md` for
+guidelines.
 
 ## Fuzzing Tools
 
