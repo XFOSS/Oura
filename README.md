@@ -4,23 +4,45 @@ This repository contains experimental implementations of the OuroLang programmin
 
 ## Building
 
-A simple C++ interpreter is provided in `ouro_lang.cc`. You can build it using g++:
+The recommended way to compile the project is via Zig:
+
+```bash
+zig build
+```
+
+This compiles the REPL and all supporting modules using C23/C++23 and links against LLVM.  Run the modular demo with:
+
+```bash
+zig build mod-run
+```
+
+Execute its unit tests using:
+
+```bash
+zig build mod-test
+```
+
+If Zig is unavailable you can still build the simple interpreter directly:
 
 ```bash
 g++ -std=c++23 ouro_lang.cc -o ouro_lang
-```
-
-Then run the REPL:
-
-```bash
 ./ouro_lang
 ```
 
-A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed.  It now compiles the C portions of the project using the C23 standard and links against LLVM in addition to `libc`. The script mirrors the basic CMake configuration and exposes tasks for running the module example and its unit tests.
+Legacy CMake files remain for compatibility and can be used instead of Zig:
+
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build . -- -j\$(nproc)
+```
 
 ## Repository Structure
 
-The project now includes a CMake-based build system, tests, container setup, and documentation. Run `cmake` in a `build` directory to configure and build the modules in `src/`.
+The source tree contains C and C++ code alongside a `build.zig` script.
+Zig's build system is used to compile the interpreter and modules.  A
+CMake configuration is kept in `cmake/` for environments that still
+depend on it.
 
 ## Zig Build with Modules
 

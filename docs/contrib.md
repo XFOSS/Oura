@@ -1,7 +1,8 @@
 # Contributing
 
 We welcome pull requests that improve the interpreter, documentation or
-build system.  Please keep patches small and ensure `ctest` passes.
+build system.  Please keep patches small and ensure `zig build mod-test`
+passes.
 
 Steps for new contributors:
 

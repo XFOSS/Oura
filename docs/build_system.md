@@ -1,17 +1,13 @@
 # Build System
 
-The repository can be built using vanilla CMake or the Zig build
-script.  Typical CMake usage:
+The repository uses Zig's build system by default. Simply run
 
 ```bash
-mkdir build && cd build
-cmake ..
-cmake --build . -- -j$(nproc)
-ctest --output-on-failure
+zig build
 ```
 
-The Zig file `build.zig` mirrors the above configuration and also
-exposes custom steps for running the module demo:
+to compile the interpreter and supporting modules. Additional steps
+are available for the module demo:
 
 ```bash
 zig build mod-run
@@ -20,3 +16,12 @@ zig build mod-test
 
 No external dependencies are required; all modules are built from the
 checked-in sources.
+
+If Zig is not available a CMake configuration remains:
+
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build . -- -j\$(nproc)
+ctest --output-on-failure
+```

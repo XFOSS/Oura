@@ -5,11 +5,10 @@ fuzzing harness.
 
 ### Unit tests
 
-```
-mkdir build && cd build
-cmake ..
-cmake --build .
-ctest --output-on-failure
+Run the small suite of module tests with Zig:
+
+```bash
+zig build mod-test
 ```
 
 ### Fuzzing
