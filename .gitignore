@@ -34,3 +34,4 @@ zig-x86_64-linux-0.14.1/
 zig.tar.xz
 .zig-cache/
 zig-out/
+build/
