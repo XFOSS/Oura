@@ -16,11 +16,17 @@ Then run the REPL:
 ./ouro_lang
 ```
 
-A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed.  It now compiles the C portions of the project using the C23 standard and links against LLVM in addition to `libc`. The script mirrors the basic CMake configuration and exposes tasks for running the module example and its unit tests.
+A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed.  It compiles the C/C++ sources using modern standards and links against LLVM.  Use it to build the entire project with:
+
+```bash
+zig build
+```
+
+The script also exposes tasks for running the module example and its unit tests.
 
 ## Repository Structure
 
-The project now includes a CMake-based build system, tests, container setup, and documentation. Run `cmake` in a `build` directory to configure and build the modules in `src/`.
+The project includes a Zig-based build system, tests, container setup, and documentation. Invoke `zig build` to compile all targets.
 
 ## Zig Build with Modules
 
@@ -45,9 +51,14 @@ contributions are welcome—see `docs/contrib.md` for guidelines.
 
 ## Fuzzing Tools
 
-Experimental AFL++ harnesses live in `tools/fuzz`.  They can be
-built with CMake using `-DENABLE_FUZZ=ON` and run against the sample
-corpus in `fuzz/corpus` to discover crashes in the lexer and parser.
+Experimental AFL++ harnesses live in `tools/fuzz`.  You can build the
+lexer fuzzer with Zig and run it against the sample corpus in
+`fuzz/corpus` to discover crashes in the lexer and parser:
+
+```bash
+zig build fuzz-lexer
+./zig-out/bin/fuzz_lexer -i fuzz/corpus -o findings
+```
 
 
 ## Legacy Ouroboros Sources
