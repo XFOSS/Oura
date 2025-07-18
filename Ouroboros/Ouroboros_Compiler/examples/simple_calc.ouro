@@ -1,0 +1,16 @@
+fn add(a: int, b: int) -> int {
+    return a + b;
+}
+
+fn main() {
+    let result: int = add(2, 3);
+    if result > 4 {
+        print("Result is greater than 4", result);
+    } else {
+        print("Result is", result);
+    }
+
+    for i in 0..5 {
+        print(i);
+    }
+}

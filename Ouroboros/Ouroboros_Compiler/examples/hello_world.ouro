@@ -1,0 +1,8 @@
+fn greet(name: string) {
+    print("Hello,", name);
+}
+
+fn main() {
+    let user: string = "World";
+    greet(user);
+}
