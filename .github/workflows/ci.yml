@@ -53,4 +53,4 @@ jobs:
           mkdir build && cd build
           cmake -DENABLE_FUZZ=ON .. 
           make fuzz_lexer
-          ./fuzz_lexer -i ../fuzz/corpus -o ./findings -t 1000
+          ./fuzz_lexer -i ../tools/fuzz/corpus -o ./findings -t 1000

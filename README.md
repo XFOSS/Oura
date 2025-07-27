@@ -47,7 +47,7 @@ contributions are welcome—see `docs/contrib.md` for guidelines.
 
 Experimental AFL++ harnesses live in `tools/fuzz`.  They can be
 built with CMake using `-DENABLE_FUZZ=ON` and run against the sample
-corpus in `fuzz/corpus` to discover crashes in the lexer and parser.
+corpus in `tools/fuzz/corpus` to discover crashes in the lexer and parser.
 
 
 ## Legacy Ouroboros Sources

@@ -19,5 +19,5 @@ If AFL++ is installed you can build the lexer fuzzer:
 ```
 cmake -DENABLE_FUZZ=ON ..
 make fuzz_lexer
-./fuzz_lexer -i ../fuzz/corpus -o ./findings
+./fuzz_lexer -i ../tools/fuzz/corpus -o ./findings
 ```

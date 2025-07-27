@@ -8,10 +8,10 @@ cmake -DENABLE_FUZZ=ON ..
 make fuzz_lexer
 ```
 
-Provide a seed corpus in `fuzz/corpus` and run the fuzzer:
+Provide a seed corpus in `corpus` and run the fuzzer:
 
 ```bash
-./fuzz_lexer -i ../fuzz/corpus -o ./findings
+./fuzz_lexer -i ../tools/fuzz/corpus -o ./findings
 ```
 
 Crashes will be written to the `findings` directory for investigation.
