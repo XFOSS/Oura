@@ -13,6 +13,10 @@ jobs:
       - run: |
           sudo apt-get update && sudo apt-get install -y clang-format
           find src include tests -iname '*.cc' | xargs clang-format --dry-run --Werror
+      - uses: goto-bus-stop/setup-zig@v2
+        with:
+          version: 0.14.1
+      - run: zig fmt --check $(git ls-files '*.zig')
 
   static-analysis:
     runs-on: ubuntu-latest
@@ -24,16 +28,13 @@ jobs:
 
   build-test:
     runs-on: ubuntu-latest
-    services:
-      docker:
-        image: my_compiler/ci:latest
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          mkdir build && cd build
-          cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain.cmake ..
-          cmake --build . -- -j$(nproc)
-          ctest --output-on-failure
+      - uses: goto-bus-stop/setup-zig@v2
+        with:
+          version: 0.14.1
+      - run: zig build
+      - run: zig build mod-test
 
   zig-mod-test:
     runs-on: ubuntu-latest
