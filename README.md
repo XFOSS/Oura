@@ -4,15 +4,28 @@ This repository contains experimental implementations of the OuroLang programmin
 
 ## Building
 
-A simple C++ interpreter is provided in `ouro_lang.cc`. You can build it using g++:
+The recommended way to compile the project is via Zig:
+
+```bash
+zig build
+```
+
+This compiles the REPL and all supporting modules using C23/C++23 and links against LLVM. Run the modular demo with:
+
+```bash
+zig build mod-run
+```
+
+Execute its unit tests using:
+
+```bash
+zig build mod-test
+```
+
+If Zig is unavailable you can still build the simple interpreter directly:
 
 ```bash
 g++ -std=c++23 ouro_lang.cc -o ouro_lang
-```
-
-Then run the REPL:
-
-```bash
 ./ouro_lang
 ```
 
@@ -21,7 +34,6 @@ A Zig build script is also included (`build.zig`) for environments with the Zig 
 ## Repository Structure
 
 The project includes tests, a development container, and extensive documentation.
-
 ## Zig Build with Modules
 
 The `ouro_mod` directory showcases a minimal C++23 module setup. Build and run the modular example with:
@@ -40,14 +52,21 @@ zig build mod-test
 
 Detailed design notes live in the `docs/` directory. The evolving language
 specification is provided in `OuroLang_Spec_2_0.md` and outlines syntax,
-semantics and concurrency features currently implemented. Community
-contributions are welcome—see `docs/contrib.md` for guidelines.
+semantics and concurrency features currently implemented. The specification now
+includes a **Types** section describing primitive datatypes and short examples
+of control flow. Community contributions are welcome—see `docs/contrib.md` for
+guidelines.
 
 ## Fuzzing Tools
 
-Experimental AFL++ harnesses live in `tools/fuzz`.  They can be
-built with CMake using `-DENABLE_FUZZ=ON` and run against the sample
-corpus in `fuzz/corpus` to discover crashes in the lexer and parser.
+Experimental AFL++ harnesses live in `tools/fuzz`.  You can build the
+lexer fuzzer with Zig and run it against the sample corpus in
+`fuzz/corpus` to discover crashes in the lexer and parser:
+
+```bash
+zig build fuzz-lexer
+./zig-out/bin/fuzz_lexer -i fuzz/corpus -o findings
+```
 
 
 ## Legacy Ouroboros Sources
