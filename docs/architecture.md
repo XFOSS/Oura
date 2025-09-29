@@ -11,3 +11,5 @@ components.  The current prototype focuses on:
 
 Future iterations will replace the experimental pieces with a modular
 pipeline written in modern C++23 with optional Zig build integration.
+For details on the basic datatypes available, refer to the **Types**
+section of `../OuroLang_Spec_2_0.md`.
