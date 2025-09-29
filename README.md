@@ -59,14 +59,9 @@ guidelines.
 
 ## Fuzzing Tools
 
-Experimental AFL++ harnesses live in `tools/fuzz`.  You can build the
-lexer fuzzer with Zig and run it against the sample corpus in
-`fuzz/corpus` to discover crashes in the lexer and parser:
-
-```bash
-zig build fuzz-lexer
-./zig-out/bin/fuzz_lexer -i fuzz/corpus -o findings
-```
+Experimental AFL++ harnesses live in `tools/fuzz`.  They can be
+built with CMake using `-DENABLE_FUZZ=ON` and run against the sample
+corpus in `tools/fuzz/corpus` to discover crashes in the lexer and parser.
 
 
 ## Legacy Ouroboros Sources
