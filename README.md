@@ -29,21 +29,11 @@ g++ -std=c++23 ouro_lang.cc -o ouro_lang
 ./ouro_lang
 ```
 
-Legacy CMake files remain for compatibility and can be used instead of Zig:
-
-```bash
-mkdir build && cd build
-cmake ..
-cmake --build . -- -j\$(nproc)
-```
+A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed. It compiles the C portions of the project using the C23 standard and links against LLVM in addition to `libc`. The script mirrors the old CMake setup and exposes tasks for running the module example and its unit tests. If Zig is missing locally, run `scripts/install_zig.sh` to download version `0.14.1`.
 
 ## Repository Structure
 
-The source tree contains C and C++ code alongside a `build.zig` script.
-Zig's build system is used to compile the interpreter and modules.  A
-CMake configuration is kept in `cmake/` for environments that still
-depend on it.
-
+The project includes tests, a development container, and extensive documentation.
 ## Zig Build with Modules
 
 The `ouro_mod` directory showcases a minimal C++23 module setup. Build and run the modular example with:
