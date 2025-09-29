@@ -9,7 +9,6 @@ components.  The current prototype focuses on:
 * a REPL front-end built on top of the interpreter so language
   features can be exercised interactively
 
-Future iterations will replace the experimental pieces with a modular
-pipeline written in modern C++23 with optional Zig build integration.
-For details on the basic datatypes available, refer to the **Types**
-section of `../OuroLang_Spec_2_0.md`.
+The project is now driven by Zig's build system which compiles the
+C and C++23 components. Future iterations will continue to evolve this
+modular pipeline while keeping Zig at the centre of the build process.

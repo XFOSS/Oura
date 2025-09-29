@@ -5,7 +5,7 @@ fuzzing harness.
 
 ### Unit tests
 
-Run the module test suite with:
+Run the small suite of module tests with Zig:
 
 ```bash
 zig build mod-test
