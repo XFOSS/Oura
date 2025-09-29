@@ -4,24 +4,36 @@ This repository contains experimental implementations of the OuroLang programmin
 
 ## Building
 
-A simple C++ interpreter is provided in `ouro_lang.cc`. You can build it using g++:
+The recommended way to compile the project is via Zig:
+
+```bash
+zig build
+```
+
+This compiles the REPL and all supporting modules using C23/C++23 and links against LLVM. Run the modular demo with:
+
+```bash
+zig build mod-run
+```
+
+Execute its unit tests using:
+
+```bash
+zig build mod-test
+```
+
+If Zig is unavailable you can still build the simple interpreter directly:
 
 ```bash
 g++ -std=c++23 ouro_lang.cc -o ouro_lang
-```
-
-Then run the REPL:
-
-```bash
 ./ouro_lang
 ```
 
-A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed.  It now compiles the C portions of the project using the C23 standard and links against LLVM in addition to `libc`. The script mirrors the basic CMake configuration and exposes tasks for running the module example and its unit tests.
+A Zig build script is also included (`build.zig`) for environments with the Zig compiler installed. It compiles the C portions of the project using the C23 standard and links against LLVM in addition to `libc`. The script mirrors the old CMake setup and exposes tasks for running the module example and its unit tests. If Zig is missing locally, run `scripts/install_zig.sh` to download version `0.14.1`.
 
 ## Repository Structure
 
-The project now includes a CMake-based build system, tests, container setup, and documentation. Run `cmake` in a `build` directory to configure and build the modules in `src/`.
-
+The project includes tests, a development container, and extensive documentation.
 ## Zig Build with Modules
 
 The `ouro_mod` directory showcases a minimal C++23 module setup. Build and run the modular example with:
@@ -40,8 +52,10 @@ zig build mod-test
 
 Detailed design notes live in the `docs/` directory. The evolving language
 specification is provided in `OuroLang_Spec_2_0.md` and outlines syntax,
-semantics and concurrency features currently implemented. Community
-contributions are welcome—see `docs/contrib.md` for guidelines.
+semantics and concurrency features currently implemented. The specification now
+includes a **Types** section describing primitive datatypes and short examples
+of control flow. Community contributions are welcome—see `docs/contrib.md` for
+guidelines.
 
 ## Fuzzing Tools
 

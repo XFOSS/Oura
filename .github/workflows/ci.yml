@@ -13,6 +13,13 @@ jobs:
       - run: |
           sudo apt-get update && sudo apt-get install -y clang-format
           find src include tests -iname '*.cc' | xargs clang-format --dry-run --Werror
+      - name: Check Zig formatting
+        run: |
+          if command -v zig >/dev/null 2>&1; then
+            zig fmt --check $(git ls-files '*.zig')
+          else
+            echo "zig not installed, skipping zig fmt"
+          fi
 
   static-analysis:
     runs-on: ubuntu-latest
@@ -24,25 +31,14 @@ jobs:
 
   build-test:
     runs-on: ubuntu-latest
-    services:
-      docker:
-        image: my_compiler/ci:latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: |
-          mkdir build && cd build
-          cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain.cmake ..
-          cmake --build . -- -j$(nproc)
-          ctest --output-on-failure
-
-  zig-mod-test:
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: goto-bus-stop/setup-zig@v2
         with:
           version: 0.14.1
+      - run: zig build
       - run: zig build mod-test
+
 
   fuzz:
     runs-on: ubuntu-latest

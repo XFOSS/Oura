@@ -1,11 +1,9 @@
 # Fuzzing Harness
 
-This directory contains the AFL++ based lexer fuzzer. Building it requires CMake with `-DENABLE_FUZZ=ON`:
+This directory contains the AFL++ based lexer fuzzer. Build it using Zig:
 
 ```bash
-mkdir build && cd build
-cmake -DENABLE_FUZZ=ON ..
-make fuzz_lexer
+zig build fuzz-lexer
 ```
 
 Provide a seed corpus in `corpus` and run the fuzzer:
