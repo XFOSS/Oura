@@ -43,3 +43,28 @@ simple round‑robin executor implemented in `ouro_lang.cc`.
 Code inside a `gpu { ... }` block is earmarked for offload to a GPU
 backend.  In the current interpreter this merely prints a message but
 serves as a placeholder for future acceleration support.
+
+## Types
+
+Primitive types are inspired by common C-family languages:
+
+* `int` – 64-bit signed integer
+* `float` – 64-bit floating point number
+* `bool` – logical true or false
+* `string` – UTF‑8 encoded sequence of characters
+* `char` – single Unicode scalar value
+
+Values can be annotated with these types directly. Example tokens and control flow:
+
+```ouro
+let threshold: int = 10
+var value: int = 5
+
+if value < threshold {
+    print("below")
+} else {
+    print("above")
+}
+```
+
+Type annotations are optional when the compiler can infer them.

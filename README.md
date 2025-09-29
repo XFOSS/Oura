@@ -62,14 +62,21 @@ zig build mod-test
 
 Detailed design notes live in the `docs/` directory. The evolving language
 specification is provided in `OuroLang_Spec_2_0.md` and outlines syntax,
-semantics and concurrency features currently implemented. Community
-contributions are welcome—see `docs/contrib.md` for guidelines.
+semantics and concurrency features currently implemented. The specification now
+includes a **Types** section describing primitive datatypes and short examples
+of control flow. Community contributions are welcome—see `docs/contrib.md` for
+guidelines.
 
 ## Fuzzing Tools
 
-Experimental AFL++ harnesses live in `tools/fuzz`.  They can be
-built with CMake using `-DENABLE_FUZZ=ON` and run against the sample
-corpus in `fuzz/corpus` to discover crashes in the lexer and parser.
+Experimental AFL++ harnesses live in `tools/fuzz`.  You can build the
+lexer fuzzer with Zig and run it against the sample corpus in
+`fuzz/corpus` to discover crashes in the lexer and parser:
+
+```bash
+zig build fuzz-lexer
+./zig-out/bin/fuzz_lexer -i fuzz/corpus -o findings
+```
 
 
 ## Legacy Ouroboros Sources

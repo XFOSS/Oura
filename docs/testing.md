@@ -13,10 +13,9 @@ zig build mod-test
 
 ### Fuzzing
 
-If AFL++ is installed you can build the lexer fuzzer:
+If AFL++ is installed you can build the lexer fuzzer using Zig:
 
-```
-cmake -DENABLE_FUZZ=ON ..
-make fuzz_lexer
-./fuzz_lexer -i ../fuzz/corpus -o ./findings
+```bash
+zig build fuzz-lexer
+./zig-out/bin/fuzz_lexer -i fuzz/corpus -o findings
 ```
